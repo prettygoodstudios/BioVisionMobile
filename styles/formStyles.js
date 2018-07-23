@@ -47,7 +47,9 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 20
   },
   formButtonText: {
     color: OFF_WHITE,

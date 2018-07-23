@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, ScrollView } from 'react-native';
-import { NativeRouter, Route, Link, Switch } from 'react-router-native';
+import { MemoryRouter, Route, Link, Switch } from 'react-router-native';
 import { Provider } from 'react-redux';
 import reduxThunk from "redux-thunk";
 import { createLogger } from 'redux-logger';
@@ -18,6 +18,7 @@ import LocationsShow from "./components/locations/locationsShow";
 import Nav from "./components/layout/nav";
 
 import styles from "./styles/main";
+import history from "./history";
 
 export default class App extends React.Component {
   render() {
@@ -26,13 +27,13 @@ export default class App extends React.Component {
         <View style={styles.container}>
           <Nav title="BioVision"/>
           <ScrollView style={styles.body}>
-            <NativeRouter>
+            <MemoryRouter>
               <Switch>
                 <Route exact path="/" component={LoginForm}/>
                 <Route exact path="/locations" component={LocationsIndex}/>
-                <Route path="/locations/:id" component={LocationsShow}/>
+                <Route path="/locations/:id" component={LocationsShow} />
               </Switch>
-            </NativeRouter>
+            </MemoryRouter>
           </ScrollView>
         </View>
       </Provider>

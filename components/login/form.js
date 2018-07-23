@@ -1,10 +1,13 @@
 import React, {Component} from "react";
-import {Text, TextInput, View, Button, TouchableWithoutFeedback} from "react-native";
+import {Text, TextInput, View, TouchableWithoutFeedback} from "react-native";
 import axios from "axios";
 import {connect} from "react-redux";
 
 import styles from "../../styles/formStyles";
 import * as actions from "../../actions";
+import history from "../../history";
+
+import Button from "../widgets/button";
 
 class LoginForm extends Component {
   constructor(){
@@ -53,11 +56,8 @@ class LoginForm extends Component {
           <Text style={[styles.formLabel]}>Password</Text>
           <TextInput style={[styles.formInput]} placeholder="Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "password")}/>
         </View>
-        <TouchableWithoutFeedback onPress={ () => this.handleSubmit() }>
-          <View style={[styles.formButton]}>
-            <Text style={[styles.formButtonText]}>Login</Text>
-          </View>
-        </TouchableWithoutFeedback>
+
+        <Button onPress={ () => this.handleSubmit() } content="Login"/>
       </View>
     );
   }

@@ -3,6 +3,7 @@ import {Text, View, TouchableWithoutFeedback} from "react-native";
 import {connect} from "react-redux";
 
 import * as actions from "../../actions";
+import history from "../../history";
 
 import cardStyles from "../../styles/card";
 
