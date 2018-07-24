@@ -47,7 +47,6 @@ class LoginForm extends Component {
     try {
       const value = await AsyncStorage.getItem(USER);
       if (value !== null) {
-        // We have data!!
         const user = {
           token: value.split(", ")[0],
           email: value.split(", ")[1]
@@ -55,7 +54,6 @@ class LoginForm extends Component {
         this.props.authenticate(user,this.success,this.error);
       }
      } catch (error) {
-       // Error retrieving data
        console.log("Error Retrieving User:", error);
      }
   }
