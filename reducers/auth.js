@@ -1,4 +1,4 @@
-import {SIGN_IN} from "../actions/types";
+import {SIGN_IN, AUTHENTICATE} from "../actions/types";
 
 const INIT_STATE = {
   user: {
@@ -16,6 +16,16 @@ export default function(state = INIT_STATE, action){
       return {
         ...state,
         user: user
+      }
+      break;
+    case AUTHENTICATE:
+      const user2 = {
+        ...action.payload,
+        authenticated: true
+      };
+      return {
+        ...state,
+        user: user2
       }
       break;
     default: return state;

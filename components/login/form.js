@@ -1,11 +1,12 @@
 import React, {Component} from "react";
-import {Text, TextInput, View, TouchableWithoutFeedback} from "react-native";
+import {Text, TextInput, View, TouchableWithoutFeedback, AsyncStorage} from "react-native";
 import axios from "axios";
 import {connect} from "react-redux";
 
 import styles from "../../styles/formStyles";
 import * as actions from "../../actions";
 import history from "../../history";
+import {USER} from "../../storage";
 
 import Button from "../widgets/button";
 import Error from "../widgets/error";
@@ -19,13 +20,44 @@ class LoginForm extends Component {
       error: ""
     }
   }
+
+  componentDidMount(){
+    this.retrieveUser();
+  }
+
   handleSubmit = () => {
     this.props.signIn(this.state, this.success, this.error);
     //this.props.history.push("/locations");
   }
 
-  success = () => {
+  success = (data) => {
+    this.storeUser(data);
     history.push("/locations");
+  }
+
+  storeUser = async (user) => {
+    try {
+      await AsyncStorage.setItem(USER, `${user.authentication_token}, ${user.email}`);
+    } catch (error) {
+      console.log("Error Storing", error);
+    }
+  }
+
+  retrieveUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem(USER);
+      if (value !== null) {
+        // We have data!!
+        const user = {
+          token: value.split(", ")[0],
+          email: value.split(", ")[1]
+        }
+        this.props.authenticate(user,this.success,this.error);
+      }
+     } catch (error) {
+       // Error retrieving data
+       console.log("Error Retrieving User:", error);
+     }
   }
 
   error = (e) => {
