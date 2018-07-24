@@ -4,11 +4,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 8,
     backgroundColor: '#fff',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-start'
   },
   body: {
     flexGrow: 7,
-    padding: 20
+    padding: 20,
   }
 });
 

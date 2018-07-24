@@ -3,11 +3,13 @@ import {View, Text, TouchableWithoutFeedback} from "react-native";
 import {connect} from "react-redux";
 
 import * as actions from "../../actions";
-import history from "../../history";
+import history, {goBack} from "../../history";
 
 import cardStyles from "../../styles/card";
 
 import Button from "../widgets/button";
+
+
 
 class LocationsShow extends Component {
 
@@ -30,7 +32,7 @@ class LocationsShow extends Component {
             );
           })}
         </View>
-        <Button onPress={() => console.log("Go Back!") } content="Back"/>
+        <Button onPress={() => goBack() } content="Back"/>
       </View>
     );
   }

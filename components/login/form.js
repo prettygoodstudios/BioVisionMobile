@@ -8,13 +8,15 @@ import * as actions from "../../actions";
 import history from "../../history";
 
 import Button from "../widgets/button";
+import Error from "../widgets/error";
 
 class LoginForm extends Component {
   constructor(){
     super();
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: ""
     }
   }
   handleSubmit = () => {
@@ -23,11 +25,26 @@ class LoginForm extends Component {
   }
 
   success = () => {
-    this.props.history.push("/locations");
+    history.push("/locations");
   }
 
-  error = () => {
-    console.log("You entered in an incorrect username or password.");
+  error = (e) => {
+    const errorCode = e.toString().split(" ").pop();
+    console.log("Error Code:",errorCode);
+    switch(errorCode){
+      case "401":
+        console.log("Incorrect username or password");
+        this.setState({
+          error: "Incorrect username or password."
+        });
+        break;
+      default:
+        console.log("Cannot establish a connection with the server.");
+        this.setState({
+          error: "Cannot establish a connection with the server."
+        });
+        break;
+    }
   }
   handleInputChange = (t, f) => {
     switch(f){
@@ -56,8 +73,8 @@ class LoginForm extends Component {
           <Text style={[styles.formLabel]}>Password</Text>
           <TextInput style={[styles.formInput]} placeholder="Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "password")}/>
         </View>
-
-        <Button onPress={ () => this.handleSubmit() } content="Login"/>
+        <Button onPress={ this.handleSubmit } content="Login"/>
+        <Error error={this.state.error}/>
       </View>
     );
   }

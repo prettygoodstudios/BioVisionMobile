@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, View, ScrollView } from 'react-native';
-import { MemoryRouter, Route, Link, Switch } from 'react-router-native';
+import { NativeRouter, Route, Link, Switch } from 'react-router-native';
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import reduxThunk from "redux-thunk";
 import { createLogger } from 'redux-logger';
@@ -10,7 +11,8 @@ const logger = createLogger();
 
 import reducers from './reducers';
 
-const store = createStore(reducers, applyMiddleware(logger, reduxThunk));
+import history from "./history";
+const store = createStore(reducers, applyMiddleware(logger, reduxThunk, routerMiddleware(history)));
 
 import LoginForm from "./components/login/form";
 import LocationsIndex from "./components/locations/locationsIndex";
@@ -18,7 +20,7 @@ import LocationsShow from "./components/locations/locationsShow";
 import Nav from "./components/layout/nav";
 
 import styles from "./styles/main";
-import history from "./history";
+
 
 export default class App extends React.Component {
   render() {
@@ -27,13 +29,13 @@ export default class App extends React.Component {
         <View style={styles.container}>
           <Nav title="BioVision"/>
           <ScrollView style={styles.body}>
-            <MemoryRouter>
+            <ConnectedRouter history={history}>
               <Switch>
                 <Route exact path="/" component={LoginForm}/>
                 <Route exact path="/locations" component={LocationsIndex}/>
                 <Route path="/locations/:id" component={LocationsShow} />
               </Switch>
-            </MemoryRouter>
+            </ConnectedRouter>
           </ScrollView>
         </View>
       </Provider>

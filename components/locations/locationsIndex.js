@@ -29,7 +29,7 @@ class LocationsIndex extends Component {
   }
 
   changeLocation = (id) => {
-    this.props.history.push(`/locations/${id}`);
+    history.push(`/locations/${id}`);
   }
 
   render(){

@@ -12,7 +12,7 @@ export function signIn({email, password}, success, error){
       });
       success();
     }).catch((e) => {
-      error();
+      error(e);
     });
   }
 }
