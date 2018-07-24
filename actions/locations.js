@@ -10,7 +10,7 @@ export function locationsIndex(success, error){
         type: LOCATIONS_INDEX,
         payload: data.data
       });
-      success();
+      success(data.data);
     }).catch((e) => {
       error();
     });

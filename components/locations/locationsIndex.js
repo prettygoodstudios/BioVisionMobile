@@ -6,19 +6,35 @@ import * as actions from "../../actions";
 import history from "../../history";
 
 import cardStyles from "../../styles/card";
+import Map from "../widgets/map";
 
 class LocationsIndex extends Component {
   constructor(){
     super();
     this.state = {
+      region: {
+        latitude:  40.296898,
+        longitude: -111.694649,
+        latitudeDelta: 0.3922,
+        longitudeDelta: 0.3921
+      }
     }
   }
   componentDidMount(){
     this.props.locationsIndex(this.success,this.error);
   }
 
-  success = () => {
-    console.log("Success");
+  success = (locations) => {
+    const first = locations[0];
+    console.log("My Location",first);
+    this.setState({
+      region: {
+        latitude: first.latitude,
+        longitude: first.longitude,
+        latitudeDelta: 0.2422,
+        longitudeDelta: 0.2421
+      }
+    });
   }
   error = (e) => {
     console.log("Error",e);
@@ -33,8 +49,10 @@ class LocationsIndex extends Component {
   }
 
   render(){
+    console.log("Locations Log",this.props.locations);
     return(
       <View>
+        <Map region={this.state.region} locations={this.props.locations}/>
         <View style={[cardStyles.card]}>
           <Text style={[cardStyles.title]}>Locations</Text>
           { this.props.locations.map((l) => {
