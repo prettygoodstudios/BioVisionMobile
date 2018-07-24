@@ -2,12 +2,12 @@ import {StyleSheet} from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 8,
+    flex: 9,
     backgroundColor: '#fff',
     justifyContent: 'flex-start'
   },
   body: {
-    flexGrow: 7,
+    flexBasis: '70%',
     padding: 20,
   },
   h1: {
@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: DARK_COLOR,
     fontFamily: MAIN_FONT
+  },
+  bottomMargin: {
+    height: 20
   }
 });
 

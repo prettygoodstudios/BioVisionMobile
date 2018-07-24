@@ -4,7 +4,7 @@ import {PRIMARY_COLOR, OFF_WHITE, MAIN_FONT} from "./main";
 
 const styles = StyleSheet.create({
   nav: {
-    flex: 1,
+    flexBasis: 100,
     backgroundColor: PRIMARY_COLOR,
     justifyContent: 'center',
     alignItems: 'flex-end',

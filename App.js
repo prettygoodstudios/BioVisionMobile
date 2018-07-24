@@ -19,6 +19,7 @@ import LocationsIndex from "./components/locations/locationsIndex";
 import LocationsShow from "./components/locations/locationsShow";
 import UserProfile from "./components/user/profile";
 import Nav from "./components/layout/nav";
+import Options from "./components/layout/options";
 
 import styles from "./styles/main";
 
@@ -38,7 +39,9 @@ export default class App extends React.Component {
                 <Route path="/user/profile" component={UserProfile} />
               </Switch>
             </ConnectedRouter>
+            <View style={styles.bottomMargin}></View>
           </ScrollView>
+          <Options />
         </View>
       </Provider>
     );

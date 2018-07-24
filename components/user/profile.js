@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {View, Text, AsyncStorage} from "react-native";
 import {connect} from "react-redux";
 
-import history from "../../history";
+import history, {goBack} from "../../history";
 import * as actions from "../../actions";
 import baseStyles from "../../styles/main";
 import Button from "../widgets/button";
@@ -25,6 +25,7 @@ class UserProfile extends Component {
         <Text style={[baseStyles.h1]}>Profile</Text>
         <Text>{this.props.user.email}</Text>
         <Button content="Logout" onPress={ this.logOut }/>
+        <Button content="Back" onPress={ goBack }/>
       </View>
     );
   }
