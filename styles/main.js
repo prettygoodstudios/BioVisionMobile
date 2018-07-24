@@ -9,6 +9,12 @@ const styles = StyleSheet.create({
   body: {
     flexGrow: 7,
     padding: 20,
+  },
+  h1: {
+    fontSize: 30,
+    fontWeight: "500",
+    color: DARK_COLOR,
+    fontFamily: MAIN_FONT
   }
 });
 

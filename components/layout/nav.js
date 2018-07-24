@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import {Text, View, Image} from "react-native";
+import {Text, View, Image, TouchableWithoutFeedback} from "react-native";
 import {connect} from "react-redux";
 
+import history from "../../history";
 import styles from "../../styles/navStyles";
 
 class Nav extends Component {
@@ -24,7 +25,13 @@ class Nav extends Component {
 
 const Menu = (props) => {
   if (props.user.authenticated){
-    return <View style={[styles.menu]}><Image source={{ uri :"https://image.flaticon.com/icons/png/512/36/36950.png" }} style={[styles.menuImage]}/></View>;
+    return (
+      <TouchableWithoutFeedback onPress={ () => history.push("/user/profile")} >
+        <View style={[styles.menu]}>
+          <Image source={{ uri :"https://image.flaticon.com/icons/png/512/36/36950.png" }} style={[styles.menuImage]}/>
+        </View>
+      </TouchableWithoutFeedback>
+    );
   }else{
     return <View></View>;
   }

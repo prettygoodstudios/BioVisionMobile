@@ -17,6 +17,7 @@ const store = createStore(reducers, applyMiddleware(logger, reduxThunk, routerMi
 import LoginForm from "./components/login/form";
 import LocationsIndex from "./components/locations/locationsIndex";
 import LocationsShow from "./components/locations/locationsShow";
+import UserProfile from "./components/user/profile";
 import Nav from "./components/layout/nav";
 
 import styles from "./styles/main";
@@ -34,6 +35,7 @@ export default class App extends React.Component {
                 <Route exact path="/" component={LoginForm}/>
                 <Route exact path="/locations" component={LocationsIndex}/>
                 <Route path="/locations/:id" component={LocationsShow} />
+                <Route path="/user/profile" component={UserProfile} />
               </Switch>
             </ConnectedRouter>
           </ScrollView>

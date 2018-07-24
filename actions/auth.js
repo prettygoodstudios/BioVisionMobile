@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {SIGN_IN, AUTHENTICATE} from "./types";
+import {SIGN_IN, AUTHENTICATE, LOG_OUT} from "./types";
 import {ROOT_URL} from "../webService";
 
 export function signIn({email, password}, success, error){
@@ -28,5 +28,18 @@ export function authenticate({email, token}, success, error){
     }).catch((e) => {
       error(e);
     });
+  }
+}
+
+export function logOut(success){
+  return function(dispatch){
+    dispatch({
+      type: LOG_OUT,
+      payload: {
+        user: {},
+        authenticated: false
+      }
+    });
+    success();
   }
 }

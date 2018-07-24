@@ -1,4 +1,4 @@
-import {signIn, authenticate} from "./auth";
+import {signIn, authenticate, logOut} from "./auth";
 import {locationsIndex, getLocation} from "./locations";
 
-export {signIn, authenticate, locationsIndex, getLocation};
+export {signIn, authenticate, locationsIndex, getLocation, logOut};

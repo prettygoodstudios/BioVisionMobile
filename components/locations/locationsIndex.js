@@ -35,9 +35,6 @@ class LocationsIndex extends Component {
   render(){
     return(
       <View>
-        <Text>{this.props.user.email}</Text>
-        <Text>{this.props.user.id}</Text>
-        <Text>Locations</Text>
         <View style={[cardStyles.card]}>
           <Text style={[cardStyles.title]}>Locations</Text>
           { this.props.locations.map((l) => {
