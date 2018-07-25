@@ -54,6 +54,17 @@ const styles = StyleSheet.create({
   formButtonText: {
     color: OFF_WHITE,
     fontSize: 30
+  },
+  picker: {
+    height: 80,
+    width: '100%'
+  },
+  pickerItem: {
+    fontFamily: MAIN_FONT,
+    color: DARK_COLOR,
+    backgroundColor: OFF_WHITE,
+    height: 80,
+    borderRadius: 5
   }
 });
 
