@@ -22,7 +22,9 @@ const card = StyleSheet.create({
     backgroundColor: OFF_WHITE,
     borderRadius: 5,
     flexDirection: 'column',
-    padding: 20
+    padding: 20,
+    marginTop: 20,
+    marginBottom: 20
   },
   cardItem: {
     backgroundColor: PRIMARY_COLOR,

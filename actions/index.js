@@ -1,4 +1,4 @@
 import {signIn, authenticate, logOut} from "./auth";
 import {locationsIndex, getLocation} from "./locations";
-
-export {signIn, authenticate, locationsIndex, getLocation, logOut};
+import {allSpecies} from "./species";
+export {signIn, authenticate, locationsIndex, getLocation, logOut, allSpecies};

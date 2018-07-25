@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import * as actions from "../../actions";
 import history, {goBack} from "../../history";
 
+import baseStyles from "../../styles/main";
 import cardStyles from "../../styles/card";
 
 import Button from "../widgets/button";
@@ -17,8 +18,9 @@ class LocationsShow extends Component {
   render(){
     return(
       <View>
-        <Text>{this.props.city}</Text>
+        <Text style={[baseStyles.h1]}>{this.props.city}</Text>
         <Text>{this.props.full_address}</Text>
+                <Button onPress={() => history.push("/encounters/new") } content="Create Encounter"/>
         <View style={[cardStyles.card]}>
           <Text style={[cardStyles.title]}>Encounters</Text>
           {this.props.encounters.map((e) => {

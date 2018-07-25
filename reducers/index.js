@@ -2,10 +2,12 @@ import { combineReducers } from 'redux';
 
 import auth from "./auth";
 import locations from "./locations";
+import species from "./species";
 
 const rootReducer = combineReducers({
   auth,
-  locations
+  locations,
+  species
 });
 
 export default rootReducer;

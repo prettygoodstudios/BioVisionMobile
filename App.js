@@ -20,6 +20,7 @@ import LocationsShow from "./components/locations/locationsShow";
 import UserProfile from "./components/user/profile";
 import Nav from "./components/layout/nav";
 import Options from "./components/layout/options";
+import EncounterForm from "./components/encounters/form";
 
 import styles from "./styles/main";
 
@@ -37,6 +38,7 @@ export default class App extends React.Component {
                 <Route exact path="/locations" component={LocationsIndex}/>
                 <Route path="/locations/:id" component={LocationsShow} />
                 <Route path="/user/profile" component={UserProfile} />
+                <Route path="/encounters/new" component={EncounterForm} />
               </Switch>
             </ConnectedRouter>
             <View style={styles.bottomMargin}></View>
