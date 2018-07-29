@@ -6,6 +6,7 @@ const {Marker, Callout} = MapView;
 
 import history from "../../history";
 import * as actions from "../../actions";
+import {safeTitle} from "../../helpers/locations";
 
 import styles from "../../styles/map";
 import baseStyles from "../../styles/main";
@@ -39,7 +40,7 @@ class Map extends Component {
             <Marker title={l.city} coordinate={{latitude: l.latitude, longitude: l.longitude}} key={i} image={{ uri: 'https://www.shareicon.net/download/2016/08/18/809136_tree_512x512.png' }} style={[styles.marker]}>
               <Callout>
                 <View style={{backgroundColor: "white"}}>
-                  <Text style={[baseStyles.h1]}>{l.city}</Text>
+                  <Text style={[baseStyles.h1]}>{safeTitle(l)}</Text>
                   <Text style={{width: 300}}>{l.full_address}</Text>
                   <Button content="View" onPress={() => this.loadLocation(l.id)}/>
                 </View>
