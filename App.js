@@ -14,13 +14,17 @@ import reducers from './reducers';
 import history from "./history";
 const store = createStore(reducers, applyMiddleware(logger, reduxThunk, routerMiddleware(history)));
 
-import LoginForm from "./components/login/form";
 import LocationsIndex from "./components/locations/locationsIndex";
 import LocationsShow from "./components/locations/locationsShow";
+
 import UserProfile from "./components/user/profile";
+import LoginForm from "./components/login/form";
+
 import Nav from "./components/layout/nav";
 import Options from "./components/layout/options";
+
 import NewEncounter from "./components/encounters/new";
+import EncounterShow from "./components/encounters/show";
 
 import styles from "./styles/main";
 
@@ -39,6 +43,7 @@ export default class App extends React.Component {
                 <Route path="/locations/:id" component={LocationsShow} />
                 <Route path="/user/profile" component={UserProfile} />
                 <Route path="/encounters/new" component={NewEncounter} />
+                <Route path="/encounters/:id" component={EncounterShow} />
               </Switch>
             </ConnectedRouter>
             <View style={styles.bottomMargin}></View>

@@ -40,7 +40,7 @@ class Map extends Component {
               <Callout>
                 <View style={{backgroundColor: "white"}}>
                   <Text style={[baseStyles.h1]}>{l.city}</Text>
-                  <Text>{l.full_address}</Text>
+                  <Text style={{width: 300}}>{l.full_address}</Text>
                   <Button content="View" onPress={() => this.loadLocation(l.id)}/>
                 </View>
               </Callout>

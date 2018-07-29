@@ -15,6 +15,10 @@ import Button from "../widgets/button";
 class LocationsShow extends Component {
 
 
+  goToEncounter = (id) => {
+    this.props.getEncounter(id, () => history.push("/encounters/"+id),() => console.log(e));
+  }
+
   render(){
     return(
       <View>
@@ -25,7 +29,7 @@ class LocationsShow extends Component {
           <Text style={[cardStyles.title]}>Encounters</Text>
           {this.props.encounters.map((e) => {
             return(
-              <TouchableWithoutFeedback key={e.id}>
+              <TouchableWithoutFeedback key={e.id} onPress={() => this.goToEncounter(e.id)}>
                 <View style={[cardStyles.cardItem]}>
                   <Text style={[cardStyles.cardItemTitle]}>{e.date}</Text>
                   <Text style={[cardStyles.cardItemDescription]}>{e.description}</Text>
