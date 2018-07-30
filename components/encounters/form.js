@@ -50,9 +50,11 @@ class EncounterForm extends Component {
       case "object":
         if(Array.isArray(e)){
           errorMessage = e[0];
-        }else{
+        }else if(e.toString() != "Error: Network Error"){
           const errors = e[Object.keys(e)[0]];
           errorMessage = errors[0];
+        }else{
+          errorMessage = "Could not establish connection to the server."
         }
         break;
       case "string":
@@ -152,8 +154,8 @@ class EncounterForm extends Component {
             </View>
           </View>
         }
-        <Button onPress={ () => this.submitForm() } content="Create"/>
         <Error error={this.state.error}/>
+        <Button onPress={ () => this.submitForm() } content="Create"/>
       </View>
     );
   }

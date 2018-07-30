@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 
 import * as actions from "../../actions";
 import history, {goBack} from "../../history";
+import {safeTitle} from "../../helpers/locations";
 
 import baseStyles from "../../styles/main";
 import cardStyles from "../../styles/card";
@@ -22,7 +23,7 @@ class LocationsShow extends Component {
   render(){
     return(
       <View>
-        <Text style={[baseStyles.h1]}>{this.props.city}</Text>
+        <Text style={[baseStyles.h1]}>{safeTitle(this.props)}</Text>
         <Text>{this.props.full_address}</Text>
                 <Button onPress={() => history.push("/encounters/new") } content="Create Encounter"/>
         <View style={[cardStyles.card]}>

@@ -103,8 +103,8 @@ class LoginForm extends Component {
           <Text style={[styles.formLabel]}>Password</Text>
           <TextInput style={[styles.formInput]} placeholder="Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "password")}/>
         </View>
-        <Button onPress={ this.handleSubmit } content="Login"/>
         <Error error={this.state.error}/>
+        <Button onPress={ this.handleSubmit } content="Login"/>
       </View>
     );
   }
