@@ -5,9 +5,10 @@ import {connect} from "react-redux";
 import * as actions from "../../actions";
 import history from "../../history";
 import {safeTitle} from "../../helpers/locations";
-
 import cardStyles from "../../styles/card";
+
 import Map from "../widgets/map";
+import ListCard from "../widgets/listCard";
 
 class LocationsIndex extends Component {
   constructor(){
@@ -58,12 +59,7 @@ class LocationsIndex extends Component {
           <Text style={[cardStyles.title]}>Locations</Text>
           { this.props.locations.map((l) => {
             return (
-              <TouchableWithoutFeedback onPress={() => this.selectLocation(l.id)} key={l.id}>
-                <View style={[cardStyles.cardItem]}>
-                  <Text style={[cardStyles.cardItemTitle]}>{safeTitle(l)}</Text>
-                  <Text style={[cardStyles.cardItemDescription]}>{l.full_address}</Text>
-                </View>
-              </TouchableWithoutFeedback>
+              <ListCard title={safeTitle(l)} description={l.full_address} callback={() => this.selectLocation(l.id)} id={l.id} key={l.id}/>
             );
           })}
         </View>

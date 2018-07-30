@@ -10,7 +10,7 @@ import baseStyles from "../../styles/main";
 import cardStyles from "../../styles/card";
 
 import Button from "../widgets/button";
-
+import ListCard from "../widgets/listCard";
 
 
 class LocationsShow extends Component {
@@ -30,12 +30,7 @@ class LocationsShow extends Component {
           <Text style={[cardStyles.title]}>Encounters</Text>
           {this.props.encounters.map((e) => {
             return(
-              <TouchableWithoutFeedback key={e.id} onPress={() => this.goToEncounter(e.id)}>
-                <View style={[cardStyles.cardItem]}>
-                  <Text style={[cardStyles.cardItemTitle]}>{e.date}</Text>
-                  <Text style={[cardStyles.cardItemDescription]}>{e.description}</Text>
-                </View>
-              </TouchableWithoutFeedback>
+              <ListCard title={e.date} description={e.description} id={e.id} key={e.id} callback={() => this.goToEncounter(e.id)}/>
             );
           })}
         </View>
