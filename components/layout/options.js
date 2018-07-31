@@ -1,28 +1,49 @@
 import React, {Component} from "react";
 import {View, Text, TouchableWithoutFeedback} from "react-native";
+import { Icon } from 'react-native-elements';
 import {connect} from "react-redux";
 
 import history from "../../history";
 import styles from "../../styles/options";
 
+
+
+const Option = (selected, icon, updateOptions) => {
+  const active = selected == icon;
+  return(
+    <TouchableWithoutFeedback onPress={() => updateOptions()} >
+      <View style={ !active ? styles.option : styles.selectedOption}>
+        <Icon name={icon} iconStyle={ !active ? styles.optionText : styles.selectedOptionText} />
+      </View>
+    </TouchableWithoutFeedback>
+  );
+}
+
 class Options extends Component {
+  constructor(){
+    super();
+    this.state = {
+      selectedOption: "place"
+    }
+  }
+
+  updateOptions = (route, option) => {
+    history.push(route);
+    this.setState({
+      selectedOption: option
+    });
+  }
+
   render(){
     const {authenticated} = this.props
     if(!this.props.user.authenticated){
       return <View></View>
     }
+
     return(
       <View style={[styles.wrapper]}>
-        <TouchableWithoutFeedback onPress={() => history.push("/locations")} >
-          <View style={[styles.option]}>
-            <Text style={[styles.optionText]}>Locations</Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => history.push("/user/profile")} style={[styles.option]}>
-          <View style={[styles.option]}>
-            <Text style={[styles.optionText]}>Profile</Text>
-          </View>
-        </TouchableWithoutFeedback>
+        {Option(this.state.selectedOption, "place", () => this.updateOptions("/locations/", "place"))}
+        {Option(this.state.selectedOption, "face", () => this.updateOptions("/user/profile", "face"))}
       </View>
     );
   }

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Text, View, Image, TouchableWithoutFeedback} from "react-native";
+import { Icon } from 'react-native-elements';
 import {connect} from "react-redux";
 
 import history from "../../history";

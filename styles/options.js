@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   option: {
     flex: 1,
     borderColor: DARK_COLOR,
-    borderWidth: 2,
+    borderWidth: 0,
     height: "100%",
     flexDirection: "column",
     justifyContent: "center"
@@ -22,7 +22,22 @@ const styles = StyleSheet.create({
     fontFamily: MAIN_FONT,
     textAlign: "center",
     color: DARK_COLOR,
-    fontSize: 30
+    fontSize: 50
+  },
+  selectedOption: {
+    flex: 1,
+    borderColor: DARK_COLOR,
+    borderWidth: 0,
+    height: "100%",
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundColor: PRIMARY_COLOR
+  },
+  selectedOptionText: {
+    fontFamily: MAIN_FONT,
+    textAlign: "center",
+    color: OFF_WHITE,
+    fontSize: 50
   }
 });
 
