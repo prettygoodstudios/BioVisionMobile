@@ -16,9 +16,10 @@ class EncounterForm extends Component {
     if (addressArray.length != 4){
       addressArray.unshift("");
     }
+    const {encounter} = this.props;
     this.state = {
       error: "",
-      specie: 1,
+      specie: encounter ? encounter.specie  : 1,
       newSpecie: false,
       title: this.props.title,
       address: addressArray[0],
@@ -27,8 +28,8 @@ class EncounterForm extends Component {
       country: addressArray[3],
       common: "",
       scientific: "",
-      description: "",
-      date: ""
+      description: encounter ? encounter.description  : "",
+      date: encounter ? encounter.date  : ""
     }
   }
 
@@ -37,7 +38,8 @@ class EncounterForm extends Component {
       ...this.state,
       toggleSpecie: this.state.newSpecie,
       token: this.props.user.authentication_token,
-      email: this.props.user.email
+      email: this.props.user.email,
+      id: this.props.encounter ? this.props.encounter.id : 0
     }
     this.props.action(params, (id) => this.props.success(id), (e) => this.error(e) )
   }
@@ -155,7 +157,7 @@ class EncounterForm extends Component {
           </View>
         }
         <Error error={this.state.error}/>
-        <Button onPress={ () => this.submitForm() } content="Create"/>
+        <Button onPress={ () => this.submitForm() } content={this.props.submitText}/>
       </View>
     );
   }

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {CREATE_ENCOUNTER, GET_ENCOUNTER} from "./types";
+import {CREATE_ENCOUNTER, GET_ENCOUNTER, UPDATE_ENCOUNTER} from "./types";
 import {ROOT_URL} from "../webService";
 
 export function createEncounter(params, success, error){
@@ -9,6 +9,24 @@ export function createEncounter(params, success, error){
       if (!data.data.errors){
         dispatch({
           type: CREATE_ENCOUNTER,
+          payload: data.data
+        });
+        success(data.data.id);
+      }else{
+        error(data.data.errors);
+      }
+    }).catch((e) => {
+      error(e);
+    });
+  }
+}
+
+export function updateEncounter(params, success, error){
+  return function(dispatch){
+    axios.put(ROOT_URL+"/encounters/"+params.id, {...params}).then((data) => {
+      if (!data.data.errors){
+        dispatch({
+          type: UPDATE_ENCOUNTER,
           payload: data.data
         });
         success(data.data.id);

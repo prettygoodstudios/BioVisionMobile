@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
   },
   bottomMargin: {
     height: 20
+  },
+  p: {
+    fontSize: 15,
+    fontWeight: "400",
+    color: DARK_COLOR,
+    fontFamily: MAIN_FONT
   }
 });
 

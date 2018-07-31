@@ -24,6 +24,7 @@ import Nav from "./components/layout/nav";
 import Options from "./components/layout/options";
 
 import NewEncounter from "./components/encounters/new";
+import EditEncounter from "./components/encounters/edit";
 import EncounterShow from "./components/encounters/show";
 
 import styles from "./styles/main";
@@ -43,7 +44,8 @@ export default class App extends React.Component {
                 <Route path="/locations/:id" component={LocationsShow} />
                 <Route path="/user/profile" component={UserProfile} />
                 <Route path="/encounters/new" component={NewEncounter} />
-                <Route path="/encounters/:id" component={EncounterShow} />
+                <Route exact path="/encounters/:id" component={EncounterShow} />
+                <Route path="/encounters/edit/:id" component={EditEncounter} />
               </Switch>
             </ConnectedRouter>
             <View style={styles.bottomMargin}></View>

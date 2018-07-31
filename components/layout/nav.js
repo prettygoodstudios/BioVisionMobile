@@ -29,7 +29,7 @@ const Menu = (props) => {
     return (
       <TouchableWithoutFeedback onPress={ () => history.push("/user/profile")} >
         <View style={[styles.menu]}>
-          <Image source={{ uri :"https://image.flaticon.com/icons/png/512/36/36950.png" }} style={[styles.menuImage]}/>
+          <Icon name="face" iconStyle={[styles.menuImage]} />       
         </View>
       </TouchableWithoutFeedback>
     );

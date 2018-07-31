@@ -1,6 +1,6 @@
 import {StyleSheet} from "react-native";
 
-import {PRIMARY_COLOR, OFF_WHITE, MAIN_FONT} from "./main";
+import {PRIMARY_COLOR, OFF_WHITE, MAIN_FONT, DARK_COLOR} from "./main";
 
 const styles = StyleSheet.create({
   nav: {
@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
     overflow: "hidden"
   },
   menuImage: {
-    width: 50,
-    height: 50,
+    fontSize: 50,
     position: "absolute",
-    top: 10
+    top: 0,
+    color: DARK_COLOR
   }
 });
 

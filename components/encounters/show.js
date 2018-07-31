@@ -13,7 +13,7 @@ class EncounterShow extends Component {
 
 
   componentDidMount(){
-    this.props.getLocation(this.props.location_id, () => console.log("Got Location"), () => console.log("Did not get location."))
+    this.props.getLocation(this.props.location_id, () => console.log("Got Location"), () => console.log("Did not get location."));
   }
 
 
@@ -28,6 +28,7 @@ class EncounterShow extends Component {
         <Text style={[baseStyles.h1]}>{date.toString()}</Text>
         <Text>{description}</Text>
         <Button content={safeTitle(location)} onPress={() => history.push("/locations/"+id)} />
+        <Button content="Edit" onPress={() => history.push("/encounters/edit/"+this.props.id)} />
         <Button content="Back" onPress={goBack}/>
       </View>
     );

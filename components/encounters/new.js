@@ -15,7 +15,7 @@ class NewEncounter extends Component {
 
   render(){
     return(
-      <EncounterForm success={this.success} action={this.props.createEncounter}/>
+      <EncounterForm success={(id) => this.success(id)} action={this.props.createEncounter} submitText="Create"/>
     );
   }
 }

@@ -33,6 +33,7 @@ class LocationsShow extends Component {
               <ListCard title={e.date} description={e.description} id={e.id} key={e.id} callback={() => this.goToEncounter(e.id)}/>
             );
           })}
+          {this.props.encounters.length == 0 && <Text style={[baseStyles.p]}>There are currently no encounters for this location.</Text>}
         </View>
         <Button onPress={() => goBack() } content="Back"/>
       </View>

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {View, Text} from "react-native";
+import {Icon} from "react-native-elements";
 import {connect} from "react-redux";
 import {MapView} from "expo";
 const {Marker, Callout} = MapView;
@@ -37,7 +38,8 @@ class Map extends Component {
       >
         { locations.map((l, i) => {
           return (
-            <Marker title={l.city} coordinate={{latitude: l.latitude, longitude: l.longitude}} key={i} image={{ uri: 'https://www.shareicon.net/download/2016/08/18/809136_tree_512x512.png' }} style={[styles.marker]}>
+            <Marker title={l.city} coordinate={{latitude: l.latitude, longitude: l.longitude}} key={i} style={[styles.marker]}>
+              <Icon name="place" iconStyle={styles.markerIcon}/>
               <Callout>
                 <View style={{backgroundColor: "white"}}>
                   <Text style={[baseStyles.h1]}>{safeTitle(l)}</Text>
