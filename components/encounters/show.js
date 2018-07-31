@@ -19,7 +19,7 @@ class EncounterShow extends Component {
 
 
   render(){
-    const {date, description, location} = this.props;
+    const {date, description, location, user_id} = this.props;
     const {id} = location;
     console.log("Hello Encounters");
     console.log("Encounter Data", this.props);
@@ -28,7 +28,7 @@ class EncounterShow extends Component {
         <Text style={[baseStyles.h1]}>{date.toString()}</Text>
         <Text>{description}</Text>
         <Button content={safeTitle(location)} onPress={() => history.push("/locations/"+id)} />
-        <Button content="Edit" onPress={() => history.push("/encounters/edit/"+this.props.id)} />
+        { this.props.user.id == user_id && <Button content="Edit" onPress={() => history.push("/encounters/edit/"+this.props.id)} />}
         <Button content="Back" onPress={goBack}/>
       </View>
     );
@@ -39,7 +39,8 @@ class EncounterShow extends Component {
 function mapStateToProps(state){
   return{
     ...state.encounters.encounter,
-    location: state.locations.currentLocation
+    location: state.locations.currentLocation,
+    user: state.auth.user
   }
 }
 
