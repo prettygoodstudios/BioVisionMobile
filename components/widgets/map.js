@@ -40,12 +40,10 @@ class Map extends Component {
           return (
             <Marker title={l.city} coordinate={{latitude: l.latitude, longitude: l.longitude}} key={i} style={[styles.marker]}>
               <Icon name="place" iconStyle={styles.markerIcon}/>
-              <Callout>
-                <View style={{backgroundColor: "white"}}>
-                  <Text style={[baseStyles.h1]}>{safeTitle(l)}</Text>
-                  <Text style={{width: 300}}>{l.full_address}</Text>
-                  <Button content="View" onPress={() => this.loadLocation(l.id)}/>
-                </View>
+              <Callout style={styles.callout}>
+                <Text style={[baseStyles.h1]}>{safeTitle(l)}</Text>
+                <Text style={{width: 300}}>{l.full_address}</Text>
+                <Button content="View" onPress={() => this.loadLocation(l.id)}/>
               </Callout>
             </Marker>
           );

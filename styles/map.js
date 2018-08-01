@@ -14,9 +14,8 @@ const styles = StyleSheet.create({
     position: "relative"
   },
   callout: {
-    width: 200,
-    backgroundColor: "white",
-    flexDirection: "column"
+    width: 300,
+    backgroundColor: "white"
   },
   markerIcon: {
     color: PRIMARY_COLOR,
