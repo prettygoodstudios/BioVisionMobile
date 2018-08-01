@@ -1,14 +1,13 @@
 import React, {Component} from "react";
-import {Text, View, TouchableWithoutFeedback} from "react-native";
+import {Text, View} from "react-native";
 import {connect} from "react-redux";
 
 import * as actions from "../../actions";
 import history from "../../history";
 import {safeTitle} from "../../helpers/locations";
-import cardStyles from "../../styles/card";
 
 import Map from "../widgets/map";
-import ListCard from "../widgets/listCard";
+import CollectionCard from "../widgets/collectionCard";
 
 class LocationsIndex extends Component {
   constructor(){
@@ -28,7 +27,6 @@ class LocationsIndex extends Component {
 
   success = (locations) => {
     const first = locations[0];
-    console.log("My Location",first);
     this.setState({
       region: {
         latitude: first.latitude,
@@ -51,18 +49,10 @@ class LocationsIndex extends Component {
   }
 
   render(){
-    console.log("Locations Log",this.props.locations);
     return(
       <View>
         <Map region={this.state.region} locations={this.props.locations}/>
-        <View style={[cardStyles.card]}>
-          <Text style={[cardStyles.title]}>Locations</Text>
-          { this.props.locations.map((l) => {
-            return (
-              <ListCard title={safeTitle(l)} description={l.full_address} callback={() => this.selectLocation(l.id)} id={l.id} key={l.id}/>
-            );
-          })}
-        </View>
+        <CollectionCard description="full_address" mapTitle={safeTitle} select={this.selectLocation} title="Locations" items={this.props.locations}/>
       </View>
     );
   }

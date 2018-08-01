@@ -7,11 +7,9 @@ import history, {goBack} from "../../history";
 import {safeTitle} from "../../helpers/locations";
 
 import baseStyles from "../../styles/main";
-import cardStyles from "../../styles/card";
 
 import Button from "../widgets/button";
-import ListCard from "../widgets/listCard";
-
+import CollectionCard from "../widgets/collectionCard";
 
 class LocationsShow extends Component {
 
@@ -26,15 +24,7 @@ class LocationsShow extends Component {
         <Text style={[baseStyles.h1]}>{safeTitle(this.props)}</Text>
         <Text>{this.props.full_address}</Text>
                 <Button onPress={() => history.push("/encounters/new") } content="Create Encounter"/>
-        <View style={[cardStyles.card]}>
-          <Text style={[cardStyles.title]}>Encounters</Text>
-          {this.props.encounters.map((e) => {
-            return(
-              <ListCard title={e.date} description={e.description} id={e.id} key={e.id} callback={() => this.goToEncounter(e.id)}/>
-            );
-          })}
-          {this.props.encounters.length == 0 && <Text style={[baseStyles.p]}>There are currently no encounters for this location.</Text>}
-        </View>
+        <CollectionCard title="Encounters" itemTitle="date" description="description" select={this.goToEncounter} items={this.props.encounters} />
         <Button onPress={() => goBack() } content="Back"/>
       </View>
     );
