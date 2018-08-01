@@ -34,6 +34,7 @@ class EncounterForm extends Component {
   }
 
   submitForm = () => {
+    this.props.setLoading(true);
     const params = {
       ...this.state,
       toggleSpecie: this.state.newSpecie,
@@ -45,6 +46,7 @@ class EncounterForm extends Component {
   }
 
   error = (e) => {
+    this.props.setLoading(false);
     console.log("Error Encountered:", e);
     let errorMessage = "Something went wrong";
     console.log("Error Type: ", typeof e);

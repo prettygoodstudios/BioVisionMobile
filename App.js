@@ -22,6 +22,7 @@ import LoginForm from "./components/login/form";
 
 import Nav from "./components/layout/nav";
 import Options from "./components/layout/options";
+import Spinner from "./components/widgets/spinner";
 
 import NewEncounter from "./components/encounters/new";
 import EditEncounter from "./components/encounters/edit";
@@ -50,6 +51,7 @@ export default class App extends React.Component {
             </ConnectedRouter>
             <View style={styles.bottomMargin}></View>
           </ScrollView>
+          <Spinner />
           <Options />
         </View>
       </Provider>

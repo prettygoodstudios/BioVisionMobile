@@ -26,11 +26,13 @@ class LoginForm extends Component {
   }
 
   handleSubmit = () => {
+    this.props.setLoading(true);
     this.props.signIn(this.state, this.success, this.error);
     //this.props.history.push("/locations");
   }
 
   success = (data) => {
+    this.props.setLoading(false);
     this.storeUser(data);
     history.push("/locations");
   }
@@ -44,6 +46,7 @@ class LoginForm extends Component {
   }
 
   retrieveUser = async () => {
+    this.props.setLoading(true);
     try {
       const value = await AsyncStorage.getItem(USER);
       if (value !== null) {
@@ -52,13 +55,17 @@ class LoginForm extends Component {
           email: value.split(", ")[1]
         }
         this.props.authenticate(user,this.success,this.error);
+      }else{
+        this.props.setLoading(false);
       }
      } catch (error) {
        console.log("Error Retrieving User:", error);
+       this.props.setLoading(false);
      }
   }
 
   error = (e) => {
+    this.props.setLoading(false);
     const errorCode = e.toString().split(" ").pop();
     console.log("Error Code:",errorCode);
     switch(errorCode){

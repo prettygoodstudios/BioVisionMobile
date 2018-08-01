@@ -10,6 +10,7 @@ import EncounterForm from "./form";
 class EditEncounter extends Component {
 
   success = (id) => {
+    this.props.setLoading(false);
     this.props.getEncounter(id, () => history.push("/encounters/"+id), (e) => console.log(e));
   }
 

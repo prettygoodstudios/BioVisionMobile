@@ -4,12 +4,14 @@ import auth from "./auth";
 import locations from "./locations";
 import species from "./species";
 import encounters from "./encounters";
+import loading from "./loading";
 
 const rootReducer = combineReducers({
   auth,
   locations,
   species,
-  encounters
+  encounters,
+  loading
 });
 
 export default rootReducer;
