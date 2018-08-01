@@ -14,7 +14,8 @@ class Spinner extends Component {
         spinValue: new Animated.Value(0)
       }
   }
-  componentDidMount(){
+
+  render(){
     Animated.timing(                  // Animate over time
       this.state.spinValue,            // The animated value to drive
       {
@@ -23,9 +24,6 @@ class Spinner extends Component {
         easing: Easing.linear              // Make it take a while
       }
     ).start();
-  }
-
-  render(){
     const spin = this.state.spinValue.interpolate({
       inputRange: [0, 360],
       outputRange: ['0deg', '360deg']
