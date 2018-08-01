@@ -4,7 +4,7 @@ import {PRIMARY_COLOR, OFF_WHITE, MAIN_FONT, DARK_COLOR} from "./main";
 const styles = StyleSheet.create({
   spinner: {
     backgroundColor: PRIMARY_COLOR,
-    borderRadius: 5,
+    borderRadius: 50,
     position: "absolute",
     top: 300,
     left: "50%",

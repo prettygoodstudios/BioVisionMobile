@@ -27,6 +27,7 @@ import Spinner from "./components/widgets/spinner";
 import NewEncounter from "./components/encounters/new";
 import EditEncounter from "./components/encounters/edit";
 import EncounterShow from "./components/encounters/show";
+import EncounterGetDate from "./components/encounters/getDate";
 
 import styles from "./styles/main";
 
@@ -46,6 +47,7 @@ export default class App extends React.Component {
                 <Route path="/user/profile" component={UserProfile} />
                 <Route path="/encounters/new" component={NewEncounter} />
                 <Route exact path="/encounters/:id" component={EncounterShow} />
+                <Route path="/encounters/getDate/:id" component={EncounterGetDate} />
                 <Route path="/encounters/edit/:id" component={EditEncounter} />
               </Switch>
             </ConnectedRouter>

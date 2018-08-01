@@ -1,7 +1,8 @@
-import {CREATE_ENCOUNTER, GET_ENCOUNTER} from "../actions/types";
+import {CREATE_ENCOUNTER, GET_ENCOUNTER, GET_ENCOUNTER_BY_DATE} from "../actions/types";
 
 const INIT_STATE = {
-  encounter: {}
+  encounter: {},
+  encounters: []
 }
 
 export default function(state = INIT_STATE, action){
@@ -16,6 +17,13 @@ export default function(state = INIT_STATE, action){
       return{
         ...state,
         encounter: action.payload
+      }
+      break;
+    case GET_ENCOUNTER_BY_DATE:
+      console.log("My Encounters", action.payload);
+      return{
+        ...state,
+        encounters: action.payload
       }
       break;
     default: return state;
