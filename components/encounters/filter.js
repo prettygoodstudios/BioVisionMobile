@@ -75,7 +75,7 @@ class EncounterFilter extends Component {
   render(){
     const {specie , start, end, error} = this.state;
     let specieArray = [{common: "All Species", id: -1}].concat(this.props.species);
-    let filtered = specie != -1 ? this.props.encounters.filter((s) => { return s.id == specie}) : this.props.encounters;
+    let filtered = specie != -1 ? this.props.encounters.filter((e) => { return e.specie_id == specie}) : this.props.encounters;
     return(
       <View>
         <Text style={baseStyles.h1}>Filter Encounters</Text>
