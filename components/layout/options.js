@@ -43,7 +43,7 @@ class Options extends Component {
     return(
       <View style={[styles.wrapper]}>
         {Option(this.state.selectedOption, "place", () => this.updateOptions("/locations/", "place"))}
-        {Option(this.state.selectedOption, "today", () => this.updateOptions("/encounters/getDate/1", "today"))}
+        {Option(this.state.selectedOption, "explore", () => this.updateOptions("/encounters/filter/1", "explore"))}
         {Option(this.state.selectedOption, "face", () => this.updateOptions("/user/profile", "face"))}
       </View>
     );
