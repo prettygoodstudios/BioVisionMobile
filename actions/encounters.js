@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {CREATE_ENCOUNTER, GET_ENCOUNTER, UPDATE_ENCOUNTER, GET_ENCOUNTER_BY_DATE} from "./types";
+import {CREATE_ENCOUNTER, GET_ENCOUNTER, UPDATE_ENCOUNTER, GET_ENCOUNTER_BY_DATE, GET_USER_ENCOUNTERS} from "./types";
 import {ROOT_URL} from "../webService";
 
 export function createEncounter(params, success, error){
@@ -59,6 +59,20 @@ export function getByDate(params, success, error){
       dispatch({
           type: GET_ENCOUNTER_BY_DATE,
           payload: d.data
+      });
+      success();
+    }).catch((e) => {
+      error(e);
+    });
+  }
+}
+
+export function getUserEncounters(user, success, error){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/encounters/user/${user}`).then((d) => {
+      dispatch({
+        type: GET_USER_ENCOUNTERS,
+        payload: d.data
       });
       success();
     }).catch((e) => {

@@ -5,10 +5,16 @@ import {connect} from "react-redux";
 import history, {goBack} from "../../history";
 import * as actions from "../../actions";
 import baseStyles from "../../styles/main";
-import Button from "../widgets/button";
 import {USER} from "../../storage";
 
+import Button from "../widgets/button";
+import CollectionCard from "../widgets/collectionCard";
+
 class UserProfile extends Component {
+
+  componentDidMount(){
+    this.props.getUserEncounters(this.props.user.id, () => console.log("Got User!"), (e) => console.log(e));
+  }
 
   logOut = () => {
     this.props.logOut(this.clearData);
@@ -19,6 +25,10 @@ class UserProfile extends Component {
     AsyncStorage.removeItem(USER);
   }
 
+  goToEncounter = (id) => {
+    this.props.getEncounter(id, () => history.push("/encounters/"+id),() => console.log(e));
+  }
+
   render(){
     return(
       <View>
@@ -26,6 +36,7 @@ class UserProfile extends Component {
         <Text>{this.props.user.email}</Text>
         <Button content="Logout" onPress={ this.logOut }/>
         <Button content="Back" onPress={ goBack }/>
+        <CollectionCard title="Encounters" itemTitle="date" description="description" select={this.goToEncounter} items={this.props.encounters} />
       </View>
     );
   }
@@ -33,8 +44,10 @@ class UserProfile extends Component {
 
 function mapStateToProps(state){
   const {user} = state.auth;
+  const {encounters} = state.encounters;
   return{
-    user: user
+    user,
+    encounters
   }
 }
 
