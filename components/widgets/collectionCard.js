@@ -16,7 +16,7 @@ const CollectionCard = (props) => {
           <ListCard title={ mapTitle ? mapTitle(i) : i[itemTitle]} description={mapDescription ? mapDescription(i) : i[description] } callback={() => select(i.id)} id={i.id} key={i.id}/>
         );
       })}
-      {items.length == 0 && <Text style={[baseStyles.p]}>There are currently no encounters for this location.</Text>}
+      {items.length == 0 && <Text style={[baseStyles.p]}>There are currently no encounters available.</Text>}
     </View>
   );
 }

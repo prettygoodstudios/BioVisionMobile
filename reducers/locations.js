@@ -1,8 +1,9 @@
-import {LOCATIONS_INDEX, GET_LOCATION} from "../actions/types";
+import {LOCATIONS_INDEX, GET_LOCATION, GET_STATES} from "../actions/types";
 
 const INIT_STATE = {
   locations: [],
-  currentLocation: {}
+  currentLocation: {},
+  states: []
 }
 
 export default function(state = INIT_STATE, action){
@@ -17,6 +18,12 @@ export default function(state = INIT_STATE, action){
       return {
         ...state,
         currentLocation: action.payload
+      }
+      break;
+    case GET_STATES:
+      return{
+        ...state,
+        states: action.payload
       }
       break;
     default: return state;

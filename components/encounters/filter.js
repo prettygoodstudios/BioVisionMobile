@@ -18,13 +18,15 @@ class EncounterFilter extends Component {
       start: new Date(),
       end: new Date(),
       error: "",
-      specie: -1
+      specie: -1,
+      state: "All States"
     }
   }
 
   componentDidMount(){
     this.getDate({s: undefined, e: undefined});
-    this.props.allSpecies(() => console.log("Got the species"), (e) => console.log(e));
+    this.props.allSpecies(() => console.log("Got the species!"), (e) => console.log(e));
+    this.props.getStates(() => console.log("Got the states!"), (e) => console.log(e));
   }
 
   getDate = ({s, e}) => {
@@ -73,9 +75,11 @@ class EncounterFilter extends Component {
   }
 
   render(){
-    const {specie , start, end, error} = this.state;
-    let specieArray = [{common: "All Species", id: -1}].concat(this.props.species);
+    const {specie , start, end, error, state} = this.state;
+    const specieArray = [{common: "All Species", id: -1}].concat(this.props.species);
+    const stateArray = ["All States"].concat(this.props.states);
     let filtered = specie != -1 ? this.props.encounters.filter((e) => { return e.specie_id == specie}) : this.props.encounters;
+    filtered = state != "All States" ? filtered.filter((e) => { return e.state == state }) : filtered;
     return(
       <View>
         <Text style={baseStyles.h1}>Filter Encounters</Text>
@@ -99,6 +103,20 @@ class EncounterFilter extends Component {
             );
           })}
         </Picker>
+        <Text style={baseStyles.h1}>By State</Text>
+        <Text>Select a state.</Text>
+        <Picker
+          prompt="Pick a state!"
+          style={[formStyles.picker]}
+          itemStyle={[formStyles.pickerItem]}
+          selectedValue={this.state.state}
+          onValueChange={(itemValue, itemIndex) => this.setState({ state: itemValue})}>
+          { stateArray.map((s, i) => {
+            return(
+              <Picker.Item label={s} value={s} key={i} />
+            );
+          })}
+        </Picker>
         <CollectionCard title="Encounters" itemTitle="date" description="description" select={this.goToEncounter} items={this.props.encounters != undefined ? filtered : []} />
       </View>
     );
@@ -108,7 +126,8 @@ class EncounterFilter extends Component {
 function mapStateToProps(state){
   return{
     encounters: state.encounters.encounters,
-    species: state.species.species
+    species: state.species.species,
+    states: state.locations.states
   }
 }
 
