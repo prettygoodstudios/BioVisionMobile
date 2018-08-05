@@ -50,8 +50,14 @@ class EncounterFilter extends Component {
     const start = s ? s : this.state.startMonth;
     const end = e ? e : this.state.endMonth;
     const params = {
-      start: start,
-      end: end
+      start: start+1,
+      end: end+1
+    }
+    if(params.end == 0){
+      params.end++;
+    }
+    if(params.start == 0){
+      params.start++;
     }
     this.props.getMonthEncounters(params, this.success, this.error);
   }
@@ -80,8 +86,8 @@ class EncounterFilter extends Component {
       this.getMonth({e: date, s: undefined});
     }else{
       this.setState({
-        startMonth: this.state.start,
-        endMonth: this.state.end,
+        startMonth: this.state.startMonth,
+        endMonth: this.state.endMonth,
         error: "The start month must become before or equal the end month."
       });
     }
@@ -128,6 +134,12 @@ class EncounterFilter extends Component {
     const stateArray = ["All States"].concat(this.props.states);
     let filtered = specie != -1 ? this.props.encounters.filter((e) => { return e.specie_id == specie}) : this.props.encounters;
     filtered = state != "All States" ? filtered.filter((e) => { return e.state == state }) : filtered;
+    filtered.map((f) => {
+      return{
+        ...f,
+        full_address: `${f.address ? f.address+", " : ""}${f.city}, ${f.state}, ${f.country}`
+      }
+    });
     return(
       <View>
         <Text style={baseStyles.h1}>Filter Encounters</Text>
