@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {CREATE_ENCOUNTER, GET_ENCOUNTER, UPDATE_ENCOUNTER, GET_ENCOUNTER_BY_DATE, GET_USER_ENCOUNTERS} from "./types";
+import {CREATE_ENCOUNTER, GET_ENCOUNTER, UPDATE_ENCOUNTER, GET_ENCOUNTER_BY_DATE, GET_USER_ENCOUNTERS, GET_MONTH_ENCOUNTERS} from "./types";
 import {ROOT_URL} from "../webService";
 
 export function createEncounter(params, success, error){
@@ -72,6 +72,20 @@ export function getUserEncounters(user, success, error){
     axios.get(`${ROOT_URL}/encounters/user/${user}`).then((d) => {
       dispatch({
         type: GET_USER_ENCOUNTERS,
+        payload: d.data
+      });
+      success();
+    }).catch((e) => {
+      error(e);
+    });
+  }
+}
+
+export function getMonthEncounters({start, end}, success, error){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/encounters/get_by_month/range?start=${start}&end=${end}`).then((d) => {
+      dispatch({
+        type: GET_MONTH_ENCOUNTERS,
         payload: d.data
       });
       success();

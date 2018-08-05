@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View, Text, DatePickerIOS, Picker} from "react-native";
+import {View, Text, DatePickerIOS, Picker, Switch} from "react-native";
 import {connect} from "react-redux";
 
 import history from "../../history";
@@ -11,12 +11,17 @@ import formStyles from "../../styles/formStyles";
 import CollectionCard from "../widgets/collectionCard";
 import Error from "../widgets/error";
 
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 class EncounterFilter extends Component {
   constructor(){
     super();
     this.state = {
       start: new Date(),
       end: new Date(),
+      isMonth: false,
+      startMonth: -1,
+      endMonth: -1,
       error: "",
       specie: -1,
       state: "All States"
@@ -39,6 +44,18 @@ class EncounterFilter extends Component {
     }
     this.props.getByDate(params, this.success, this.error);
   }
+
+  getMonth = ({s, e}) => {
+    this.props.setLoading(true);
+    const start = s ? s : this.state.startMonth;
+    const end = e ? e : this.state.endMonth;
+    const params = {
+      start: start,
+      end: end
+    }
+    this.props.getMonthEncounters(params, this.success, this.error);
+  }
+
   success = () => {
     this.props.setLoading(false);
   }
@@ -46,6 +63,28 @@ class EncounterFilter extends Component {
   error = (e) => {
     this.props.setLoading(false);
     console.log(e);
+  }
+
+  setMonth = (start, date) => {
+    if(start && date <= this.state.endMonth){
+      this.setState({
+        startMonth: date,
+        error: ""
+      });
+      this.getMonth({s: date, e: undefined});
+    }else if(!start && date >= this.state.startMonth){
+      this.setState({
+        endMonth: date,
+        error: ""
+      });
+      this.getMonth({e: date, s: undefined});
+    }else{
+      this.setState({
+        startMonth: this.state.start,
+        endMonth: this.state.end,
+        error: "The start month must become before or equal the end month."
+      });
+    }
   }
 
   setDate = (start, date) => {
@@ -65,8 +104,17 @@ class EncounterFilter extends Component {
       this.setState({
         start: this.state.start,
         end: this.state.end,
-        error: "The start date must become before the end date."
+        error: "The start date must become before or equal the end date."
       });
+    }
+  }
+
+  toggleDate = (month) => {
+    this.setState({isMonth: month});
+    if(month){
+      this.getMonth({s: this.state.startMonth, e: this.state.endMonth});
+    }else{
+      this.getDate({s: this.state.start, e: this.state.end});
     }
   }
 
@@ -84,10 +132,44 @@ class EncounterFilter extends Component {
       <View>
         <Text style={baseStyles.h1}>Filter Encounters</Text>
         <Text style={baseStyles.h1}>By Date</Text>
-        <Text style={baseStyles.p}>Start</Text>
-        <DatePickerIOS date={start} onDateChange={ date => this.setDate(true, date)} mode="date"/>
-        <Text style={baseStyles.p}>End</Text>
-        <DatePickerIOS date={end} onDateChange={ date => this.setDate(false, date)} mode="date"/>
+        <Text>or by month range.</Text>
+        <Switch onValueChange={(v) => this.toggleDate(v)} value={this.state.isMonth}/>
+        { !this.state.isMonth &&
+          <View>
+            <Text style={baseStyles.p}>Start</Text>
+            <DatePickerIOS date={start} onDateChange={ date => this.setDate(true, date)} mode="date"/>
+            <Text style={baseStyles.p}>End</Text>
+            <DatePickerIOS date={end} onDateChange={ date => this.setDate(false, date)} mode="date"/>
+          </View>
+        }
+        { this.state.isMonth &&
+          <View>
+            <Text style={baseStyles.p}>Start Month</Text>
+            <Picker prompt="Pick a month!"
+              style={[formStyles.picker]}
+              itemStyle={[formStyles.pickerItem]}
+              selectedValue={this.state.startMonth}
+              onValueChange={(itemValue, itemIndex) => this.setMonth(true, itemValue)}>
+              {months.map((m, i) => {
+                return(
+                  <Picker.Item label={m} value={i} key={i} />
+                );
+              })}
+            </Picker>
+            <Text style={baseStyles.p}>End Month</Text>
+            <Picker prompt="Pick a month!"
+              style={[formStyles.picker]}
+              itemStyle={[formStyles.pickerItem]}
+              selectedValue={this.state.endMonth}
+              onValueChange={(itemValue, itemIndex) => this.setMonth(false, itemValue)}>
+              {months.map((m, i) => {
+                return(
+                  <Picker.Item label={m} value={i} key={i} />
+                );
+              })}
+            </Picker>
+          </View>
+        }
         <Error error={error} />
         <Text style={baseStyles.h1}>By Specie</Text>
         <Text>Select a specie.</Text>
