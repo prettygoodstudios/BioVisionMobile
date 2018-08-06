@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {CREATE_ENCOUNTER, GET_ENCOUNTER, UPDATE_ENCOUNTER, GET_ENCOUNTER_BY_DATE, GET_USER_ENCOUNTERS, GET_MONTH_ENCOUNTERS} from "./types";
+import {CREATE_ENCOUNTER, GET_ENCOUNTER, UPDATE_ENCOUNTER, GET_ENCOUNTER_BY_DATE, GET_USER_ENCOUNTERS, GET_MONTH_ENCOUNTERS, CREATE_USER} from "./types";
 import {ROOT_URL} from "../webService";
 
 export function createEncounter(params, success, error){

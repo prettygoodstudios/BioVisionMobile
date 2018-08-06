@@ -1,6 +1,5 @@
 import React, {Component} from "react";
-import {Text, TextInput, View, TouchableWithoutFeedback, AsyncStorage} from "react-native";
-import axios from "axios";
+import {View, Text, TextInput} from "react-native";
 import {connect} from "react-redux";
 
 import styles from "../../styles/formStyles";
@@ -11,29 +10,35 @@ import {USER} from "../../storage";
 import Button from "../widgets/button";
 import Error from "../widgets/error";
 
-class LoginForm extends Component {
+class SignupForm extends Component {
+
   constructor(){
     super();
     this.state = {
+      display: "",
       email: "",
       password: "",
+      passwordConfirmation: "",
       error: ""
     }
   }
 
-  componentDidMount(){
-    this.retrieveUser();
-  }
-
   handleSubmit = () => {
     this.props.setLoading(true);
-    this.props.signIn(this.state, this.success, this.error);
-    //this.props.history.push("/locations");
+    const {display, email, password, passwordConfirmation} = this.state;
+    const params = {
+      display,
+      email,
+      password,
+      password_confirmation: passwordConfirmation
+    }
+
+    this.props.createAccount(params , this.success, this.error);
   }
 
-  success = (data) => {
+  success = (u) => {
     this.props.setLoading(false);
-    this.storeUser(data);
+    this.storeUser(u);
     history.push("/locations");
   }
 
@@ -45,51 +50,26 @@ class LoginForm extends Component {
     }
   }
 
-  retrieveUser = async () => {
-    this.props.setLoading(true);
-    try {
-      const value = await AsyncStorage.getItem(USER);
-      if (value !== null) {
-        const user = {
-          token: value.split(", ")[0],
-          email: value.split(", ")[1]
-        }
-        this.props.authenticate(user,this.success,this.error);
-      }else{
-        this.props.setLoading(false);
-      }
-     } catch (error) {
-       console.log("Error Retrieving User:", error);
-       this.props.setLoading(false);
-     }
-  }
-
   error = (e) => {
     this.props.setLoading(false);
-    const errorCode = e.toString().split(" ").pop();
-    console.log("Error Code:",errorCode);
-    switch(errorCode){
-      case "401":
-        console.log("Incorrect username or password");
-        this.setState({
-          error: "Incorrect username or password."
-        });
-        break;
-      default:
-        console.log("Cannot establish a connection with the server.");
-        this.setState({
-          error: "Cannot establish a connection with the server."
-        });
-        break;
-    }
+    this.setState({
+      error: e
+    });
   }
+
   handleInputChange = (t, f) => {
     switch(f){
       case "email":
         this.setState({email: t});
         break;
+      case "display":
+        this.setState({display: t});
+        break;
       case "password":
         this.setState({password: t});
+        break;
+      case "passwordConfirmation":
+        this.setState({passwordConfirmation: t});
         break;
       default:
         break;
@@ -100,7 +80,11 @@ class LoginForm extends Component {
     return(
       <View style={[styles.formContainer]}>
         <View style={[styles.formTitle]}>
-          <Text style={[styles.formTitleText]}>Login</Text>
+          <Text style={[styles.formTitleText]}>Sign Up</Text>
+        </View>
+        <View style={[styles.formGroup]}>
+          <Text style={[styles.formLabel]}>Display Name</Text>
+          <TextInput style={[styles.formInput]} placeholder="Display Name" autoCapitalize="none" onChangeText={(t) => this.handleInputChange(t, "display")}/>
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Email</Text>
@@ -110,21 +94,25 @@ class LoginForm extends Component {
           <Text style={[styles.formLabel]}>Password</Text>
           <TextInput style={[styles.formInput]} placeholder="Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "password")}/>
         </View>
+        <View style={[styles.formGroup]}>
+          <Text style={[styles.formLabel]}>Confirm Password</Text>
+          <TextInput style={[styles.formInput]} placeholder="Confirm Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "passwordConfirmation")}/>
+        </View>
         <Error error={this.state.error}/>
-        <Button onPress={ this.handleSubmit } content="Login"/>
+        <Button onPress={ this.handleSubmit } content="Create Account"/>
         <View style={{flexDirection: "row", justifyContent: "center"}}>
           <Text style={styles.formLabel}>OR</Text>
         </View>
-        <Button onPress={ () => history.push("/signup") } content="Sign Up"/>
+        <Button onPress={ () => history.push("/") } content="Sign In"/>
       </View>
     );
   }
 }
 
 function mapStateToProps(state){
-  return {
-    user: state.user
-  };
+ return{
+
+ }
 }
 
-export default connect(mapStateToProps, actions)(LoginForm);
+export default connect(mapStateToProps , actions)(SignupForm);

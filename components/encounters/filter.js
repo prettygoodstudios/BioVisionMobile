@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 
 import history from "../../history";
 import * as actions from "../../actions";
+import {safeTitle, fullAddress} from "../../helpers/locations";
 import baseStyles from "../../styles/main";
 import dateStyles from "../../styles/date";
 import formStyles from "../../styles/formStyles";
@@ -116,7 +117,10 @@ class EncounterFilter extends Component {
   }
 
   toggleDate = (month) => {
-    this.setState({isMonth: month});
+    this.setState({
+      isMonth: month,
+      error: ""
+    });
     if(month){
       this.getMonth({s: this.state.startMonth, e: this.state.endMonth});
     }else{
@@ -137,7 +141,8 @@ class EncounterFilter extends Component {
     filtered.map((f) => {
       return{
         ...f,
-        full_address: `${f.address ? f.address+", " : ""}${f.city}, ${f.state}, ${f.country}`
+        full_address: fullAddress(f),
+        safeTitle: safeTitle(f)
       }
     });
     return(
@@ -211,7 +216,7 @@ class EncounterFilter extends Component {
             );
           })}
         </Picker>
-        <CollectionCard title="Encounters" itemTitle="date" description="description" select={this.goToEncounter} items={this.props.encounters != undefined ? filtered : []} />
+        <CollectionCard title="Encounters" itemTitle="date" mapTitle={(e) => `${e.date} - ${safeTitle(e)}`} description="description" select={this.goToEncounter} items={this.props.encounters != undefined ? filtered : []} />
       </View>
     );
   }

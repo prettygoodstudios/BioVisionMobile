@@ -19,6 +19,7 @@ import LocationsShow from "./components/locations/locationsShow";
 
 import UserProfile from "./components/user/profile";
 import LoginForm from "./components/login/form";
+import SignupForm from "./components/signup/form";
 
 import Nav from "./components/layout/nav";
 import Options from "./components/layout/options";
@@ -42,6 +43,7 @@ export default class App extends React.Component {
             <ConnectedRouter history={history}>
               <Switch>
                 <Route exact path="/" component={LoginForm}/>
+                <Route exact path="/signup" component={SignupForm}/>
                 <Route exact path="/locations" component={LocationsIndex}/>
                 <Route path="/locations/:id" component={LocationsShow} />
                 <Route path="/user/profile" component={UserProfile} />
