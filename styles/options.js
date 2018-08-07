@@ -38,6 +38,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: OFF_WHITE,
     fontSize: 50
+  },
+  filterNav: {
+    borderRadius: 10,
+    height: 100
+  },
+  selectedNavItem: {
+    borderRadius: 10
   }
 });
 

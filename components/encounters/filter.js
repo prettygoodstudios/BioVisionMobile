@@ -9,6 +9,7 @@ import baseStyles from "../../styles/main";
 import dateStyles from "../../styles/date";
 import formStyles from "../../styles/formStyles";
 
+import FilterNav from "../widgets/filterNav";
 import CollectionCard from "../widgets/collectionCard";
 import Error from "../widgets/error";
 
@@ -132,7 +133,25 @@ class EncounterFilter extends Component {
     this.props.getEncounter(id, () => history.push("/encounters/"+id),(e) => console.log(e));
   }
 
+  selectOption = (option) => {
+    console.log(option);
+  }
+
   render(){
+    const options = [
+      {
+        icon: "today",
+        callBack: this.selectOption
+      },
+      {
+        icon: "business",
+        callBack: this.selectOption
+      },
+      {
+        icon: "nature",
+        callBack: this.selectOption
+      }
+    ];
     const {specie , start, end, error, state} = this.state;
     const specieArray = [{common: "All Species", id: -1}].concat(this.props.species);
     const stateArray = ["All States"].concat(this.props.states);
@@ -148,6 +167,7 @@ class EncounterFilter extends Component {
     return(
       <View>
         <Text style={baseStyles.h1}>Filter Encounters</Text>
+        <FilterNav options={options}/>
         <Text style={baseStyles.h1}>By Date</Text>
         <Text>or by month range.</Text>
         <Switch onValueChange={(v) => this.toggleDate(v)} value={this.state.isMonth}/>
