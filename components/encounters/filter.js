@@ -10,10 +10,100 @@ import dateStyles from "../../styles/date";
 import formStyles from "../../styles/formStyles";
 
 import FilterNav from "../widgets/filterNav";
+import TabView from "../widgets/tabView";
 import CollectionCard from "../widgets/collectionCard";
 import Error from "../widgets/error";
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+const DateFilter = ({isMonth, startMonth, endMonth, start, end, setMonth, setDate, toggleDate}) => {
+  return(
+    <View>
+      <Text style={baseStyles.h1}>By Date</Text>
+      <Text>or by month range.</Text>
+      <Switch onValueChange={(v) => toggleDate(v)} value={isMonth}/>
+      { !isMonth &&
+        <View>
+          <Text style={baseStyles.p}>Start</Text>
+          <DatePickerIOS date={start} onDateChange={ date => setDate(true, date)} mode="date"/>
+          <Text style={baseStyles.p}>End</Text>
+          <DatePickerIOS date={end} onDateChange={ date => setDate(false, date)} mode="date"/>
+        </View>
+      }
+      { isMonth &&
+        <View>
+          <Text style={baseStyles.p}>Start Month</Text>
+          <Picker prompt="Pick a month!"
+            style={[formStyles.picker]}
+            itemStyle={[formStyles.pickerItem]}
+            selectedValue={startMonth}
+            onValueChange={(itemValue, itemIndex) => setMonth(true, itemValue)}>
+            {months.map((m, i) => {
+              return(
+                <Picker.Item label={m} value={i} key={i} />
+              );
+            })}
+          </Picker>
+          <Text style={baseStyles.p}>End Month</Text>
+          <Picker prompt="Pick a month!"
+            style={[formStyles.picker]}
+            itemStyle={[formStyles.pickerItem]}
+            selectedValue={endMonth}
+            onValueChange={(itemValue, itemIndex) => setMonth(false, itemValue)}>
+            {months.map((m, i) => {
+              return(
+                <Picker.Item label={m} value={i} key={i} />
+              );
+            })}
+          </Picker>
+        </View>
+      }
+    </View>
+  );
+}
+
+const SpecieFilter = ({specie, setSpecie, specieArray}) => {
+  return(
+    <View>
+      <Text style={baseStyles.h1}>By Specie</Text>
+      <Text>Select a specie.</Text>
+      <Picker
+        prompt="Pick a specie!"
+        style={[formStyles.picker]}
+        itemStyle={[formStyles.pickerItem]}
+        selectedValue={specie}
+        onValueChange={(itemValue, itemIndex) => setSpecie(itemValue)}>
+        { specieArray.map((s, i) => {
+          return(
+            <Picker.Item label={s.common} value={s.id} key={i} />
+          );
+        })}
+      </Picker>
+    </View>
+  );
+}
+
+const StateFilter = ({state, stateArray, setPlace}) => {
+  return(
+    <View>
+      <Text style={baseStyles.h1}>By State</Text>
+      <Text>Select a state.</Text>
+      <Picker
+        prompt="Pick a state!"
+        style={[formStyles.picker]}
+        itemStyle={[formStyles.pickerItem]}
+        selectedValue={state}
+        onValueChange={(itemValue, itemIndex) => setPlace(itemValue)}>
+        { stateArray.map((s, i) => {
+          return(
+            <Picker.Item label={s} value={s} key={i} />
+          );
+        })}
+      </Picker>
+    </View>
+  )
+}
+
 
 class EncounterFilter extends Component {
   constructor(){
@@ -26,7 +116,8 @@ class EncounterFilter extends Component {
       endMonth: -1,
       error: "",
       specie: -1,
-      state: "All States"
+      state: "All States",
+      selectedFilter: ""
     }
   }
 
@@ -95,6 +186,18 @@ class EncounterFilter extends Component {
     }
   }
 
+  setSpecie = (id) => {
+    this.setState({
+      specie: id
+    });
+  }
+
+  setPlace = (state) => {
+    this.setState({
+      state: state
+    });
+  }
+
   setDate = (start, date) => {
     if(start && date <= this.state.end){
       this.setState({
@@ -134,7 +237,9 @@ class EncounterFilter extends Component {
   }
 
   selectOption = (option) => {
-    console.log(option);
+    this.setState({
+      selectedFilter: option
+    })
   }
 
   render(){
@@ -152,7 +257,7 @@ class EncounterFilter extends Component {
         callBack: this.selectOption
       }
     ];
-    const {specie , start, end, error, state} = this.state;
+    const {specie , start, end, error, state, isMonth, startMonth, endMonth} = this.state;
     const specieArray = [{common: "All Species", id: -1}].concat(this.props.species);
     const stateArray = ["All States"].concat(this.props.states);
     let filtered = specie != -1 ? this.props.encounters.filter((e) => { return e.specie_id == specie}) : this.props.encounters;
@@ -164,78 +269,26 @@ class EncounterFilter extends Component {
         safeTitle: safeTitle(f)
       }
     });
+    const navComponents = [
+      {
+        name: "today",
+        component: DateFilter({start, end, isMonth, startMonth, endMonth, setDate: this.setDate, setMonth: this.setMonth, toggleDate: this.toggleDate})
+      },
+      {
+        name: "business",
+        component: StateFilter({state, stateArray, setPlace: this.setPlace})
+      },
+      {
+        name: "nature",
+        component: SpecieFilter({specie, specieArray, setSpecie: this.setSpecie})
+      }
+    ]
     return(
       <View>
         <Text style={baseStyles.h1}>Filter Encounters</Text>
         <FilterNav options={options}/>
-        <Text style={baseStyles.h1}>By Date</Text>
-        <Text>or by month range.</Text>
-        <Switch onValueChange={(v) => this.toggleDate(v)} value={this.state.isMonth}/>
-        { !this.state.isMonth &&
-          <View>
-            <Text style={baseStyles.p}>Start</Text>
-            <DatePickerIOS date={start} onDateChange={ date => this.setDate(true, date)} mode="date"/>
-            <Text style={baseStyles.p}>End</Text>
-            <DatePickerIOS date={end} onDateChange={ date => this.setDate(false, date)} mode="date"/>
-          </View>
-        }
-        { this.state.isMonth &&
-          <View>
-            <Text style={baseStyles.p}>Start Month</Text>
-            <Picker prompt="Pick a month!"
-              style={[formStyles.picker]}
-              itemStyle={[formStyles.pickerItem]}
-              selectedValue={this.state.startMonth}
-              onValueChange={(itemValue, itemIndex) => this.setMonth(true, itemValue)}>
-              {months.map((m, i) => {
-                return(
-                  <Picker.Item label={m} value={i} key={i} />
-                );
-              })}
-            </Picker>
-            <Text style={baseStyles.p}>End Month</Text>
-            <Picker prompt="Pick a month!"
-              style={[formStyles.picker]}
-              itemStyle={[formStyles.pickerItem]}
-              selectedValue={this.state.endMonth}
-              onValueChange={(itemValue, itemIndex) => this.setMonth(false, itemValue)}>
-              {months.map((m, i) => {
-                return(
-                  <Picker.Item label={m} value={i} key={i} />
-                );
-              })}
-            </Picker>
-          </View>
-        }
+        <TabView selectedTab={this.state.selectedFilter} tabs={navComponents}/>
         <Error error={error} />
-        <Text style={baseStyles.h1}>By Specie</Text>
-        <Text>Select a specie.</Text>
-        <Picker
-          prompt="Pick a specie!"
-          style={[formStyles.picker]}
-          itemStyle={[formStyles.pickerItem]}
-          selectedValue={this.state.specie}
-          onValueChange={(itemValue, itemIndex) => this.setState({ specie: itemValue})}>
-          { specieArray.map((s, i) => {
-            return(
-              <Picker.Item label={s.common} value={s.id} key={i} />
-            );
-          })}
-        </Picker>
-        <Text style={baseStyles.h1}>By State</Text>
-        <Text>Select a state.</Text>
-        <Picker
-          prompt="Pick a state!"
-          style={[formStyles.picker]}
-          itemStyle={[formStyles.pickerItem]}
-          selectedValue={this.state.state}
-          onValueChange={(itemValue, itemIndex) => this.setState({ state: itemValue})}>
-          { stateArray.map((s, i) => {
-            return(
-              <Picker.Item label={s} value={s} key={i} />
-            );
-          })}
-        </Picker>
         <CollectionCard title="Encounters" itemTitle="date" mapTitle={(e) => `${e.date} - ${safeTitle(e)}`} description="description" select={this.goToEncounter} items={this.props.encounters != undefined ? filtered : []} />
       </View>
     );
