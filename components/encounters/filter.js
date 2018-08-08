@@ -13,6 +13,7 @@ import FilterNav from "../widgets/filterNav";
 import TabView from "../widgets/tabView";
 import CollectionCard from "../widgets/collectionCard";
 import Error from "../widgets/error";
+import DatePickerCrossPlatform from "../widgets/datePickerCrossPlatform";
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -25,9 +26,9 @@ const DateFilter = ({isMonth, startMonth, endMonth, start, end, setMonth, setDat
       { !isMonth &&
         <View>
           <Text style={baseStyles.p}>Start</Text>
-          <DatePickerIOS date={start} onDateChange={ date => setDate(true, date)} mode="date"/>
+          <DatePickerCrossPlatform date={start} setDate={(d) => setDate(true, d)}/>
           <Text style={baseStyles.p}>End</Text>
-          <DatePickerIOS date={end} onDateChange={ date => setDate(false, date)} mode="date"/>
+          <DatePickerCrossPlatform date={end} setDate={(d) => setDate(false, d)}/>
         </View>
       }
       { isMonth &&
@@ -109,7 +110,7 @@ class EncounterFilter extends Component {
   constructor(){
     super();
     this.state = {
-      start: new Date(),
+      start: new Date('01 Jan 1970 15:01:01 GMT'),
       end: new Date(),
       isMonth: false,
       startMonth: -1,
