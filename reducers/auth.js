@@ -1,4 +1,4 @@
-import {SIGN_IN, AUTHENTICATE, LOG_OUT, CREATE_USER} from "../actions/types";
+import {SIGN_IN, AUTHENTICATE, LOG_OUT, CREATE_USER, USE_UNAUTHENTICATED} from "../actions/types";
 
 const INIT_STATE = {
   user: {
@@ -43,6 +43,12 @@ export default function(state = INIT_STATE, action){
       return{
         ...state,
         user: user3
+      }
+      break;
+    case USE_UNAUTHENTICATED:
+      return{
+        ...state,
+        user: action.payload
       }
       break;
     default: return state;

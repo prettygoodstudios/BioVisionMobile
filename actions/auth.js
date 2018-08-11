@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {SIGN_IN, AUTHENTICATE, LOG_OUT, CREATE_USER} from "./types";
+import {SIGN_IN, AUTHENTICATE, LOG_OUT, CREATE_USER, USE_UNAUTHENTICATED} from "./types";
 import {ROOT_URL} from "../webService";
 
 export function signIn({email, password}, success, error){
@@ -62,4 +62,15 @@ export function createAccount(params, success, error){
       error("Could not establish a connection with the server.");
     });
   }
+}
+
+export function useUnauthenticated(success){
+  return{
+    type: USE_UNAUTHENTICATED,
+    payload: {
+      authenticated: false,
+      email: "guest_user"
+    }
+  }
+  success();
 }

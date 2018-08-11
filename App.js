@@ -1,11 +1,13 @@
 import React from 'react';
-import {Text, View, ScrollView } from 'react-native';
+import {Text, View, ScrollView, KeyboardAvoidingView } from 'react-native';
+import {Font} from 'expo';
 import { NativeRouter, Route, Link, Switch } from 'react-router-native';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import reduxThunk from "redux-thunk";
 import { createLogger } from 'redux-logger';
 import { createStore, applyMiddleware, compose } from 'redux';
+
 
 const logger = createLogger();
 
@@ -34,26 +36,53 @@ import styles from "./styles/main";
 
 
 export default class App extends React.Component {
+
+  constructor(){
+    super();
+    this.state = {
+      fontsLoaded: false,
+      keyBoard: false
+    }
+  }
+
+  async componentDidMount(){
+    await Font.loadAsync({
+      'avenir-medium': require('./assets/fonts/avenirmedium.ttf'),
+    });
+    await Font.loadAsync({
+      'futura-medium': require('./assets/fonts/futuramedium.ttf'),
+    });
+    this.setState({
+      fontsLoaded: true
+    })
+  }
+
   render() {
+    if(!this.state.fontsLoaded){
+      return <View></View>;
+    }
     return (
       <Provider store={store}>
         <View style={styles.container}>
           <Nav title="BioVision"/>
-          <ScrollView style={styles.body}>
-            <ConnectedRouter history={history}>
-              <Switch>
-                <Route exact path="/" component={LoginForm}/>
-                <Route exact path="/signup" component={SignupForm}/>
-                <Route exact path="/locations" component={LocationsIndex}/>
-                <Route path="/locations/:id" component={LocationsShow} />
-                <Route path="/user/profile" component={UserProfile} />
-                <Route path="/encounters/new" component={NewEncounter} />
-                <Route exact path="/encounters/:id" component={EncounterShow} />
-                <Route path="/encounters/filter/:id" component={EncounterFilter} />
-                <Route path="/encounters/edit/:id" component={EditEncounter} />
-              </Switch>
-            </ConnectedRouter>
-            <View style={styles.bottomMargin}></View>
+          <ScrollView style={styles.body} keyboardShouldPersistTaps='always'>
+            <KeyboardAvoidingView  behavior="padding" style={{flex: 1}} enabled>
+              <ConnectedRouter history={history}>
+                <Switch>
+                  <Route exact path="/" component={LoginForm}/>
+                  <Route exact path="/signup" component={SignupForm}/>
+                  <Route exact path="/locations" component={LocationsIndex}/>
+                  <Route path="/locations/:id" component={LocationsShow} />
+                  <Route path="/user/profile" component={UserProfile} />
+                  <Route path="/encounters/new" component={NewEncounter} />
+                  <Route exact path="/encounters/:id" component={EncounterShow} />
+                  <Route path="/encounters/filter/:id" component={EncounterFilter} />
+                  <Route path="/encounters/edit/:id" component={EditEncounter} />
+                </Switch>
+              </ConnectedRouter>
+              <View style={styles.bottomMargin}></View>
+              <View style={{height: this.state.keyBoard ? 300 : 0}}></View>
+            </KeyboardAvoidingView>
           </ScrollView>
           <Spinner />
           <Options />

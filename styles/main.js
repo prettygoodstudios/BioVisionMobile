@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
 
 const PRIMARY_COLOR = "#6ac9c0";
 const OFF_WHITE = "#ECECEC";
-const MAIN_FONT = "Avenir";
-const SECONDARY_FONT = "Futura";
+const MAIN_FONT = 'avenir-medium';
+const SECONDARY_FONT = 'avenir-medium';
 const DARK_COLOR = "#6c6c6c";
 
 export default styles;

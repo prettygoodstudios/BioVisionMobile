@@ -32,7 +32,6 @@ class LoginForm extends Component {
   }
 
   success = (data) => {
-    this.props.setLoading(false);
     this.storeUser(data);
     history.push("/locations");
   }
@@ -116,6 +115,8 @@ class LoginForm extends Component {
           <Text style={styles.formLabel}>OR</Text>
         </View>
         <Button onPress={ () => history.push("/signup") } content="Sign Up"/>
+        <View style={{height: 50}}></View>
+        <Button onPress={ () => this.props.useUnauthenticated(history.push("/locations")) } content="Use Unauthenticated" />
       </View>
     );
   }

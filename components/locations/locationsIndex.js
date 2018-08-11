@@ -22,6 +22,7 @@ class LocationsIndex extends Component {
     }
   }
   componentDidMount(){
+    this.props.setLoading(true);
     this.props.locationsIndex(this.success,this.error);
   }
 
@@ -35,9 +36,11 @@ class LocationsIndex extends Component {
         longitudeDelta: 0.2421
       }
     });
+    this.props.setLoading(false);
   }
   error = (e) => {
     console.log("Error",e);
+    this.props.setLoading(false);
   }
 
   selectLocation = (id) => {

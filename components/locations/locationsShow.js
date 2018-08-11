@@ -23,7 +23,7 @@ class LocationsShow extends Component {
       <View>
         <Text style={[baseStyles.h1]}>{safeTitle(this.props)}</Text>
         <Text>{this.props.full_address}</Text>
-                <Button onPress={() => history.push("/encounters/new") } content="Create Encounter"/>
+        {this.props.user.email != "guest_user" && <Button onPress={() => history.push("/encounters/new") } content="Create Encounter"/> }
         <CollectionCard title="Encounters" itemTitle="date" description="description" select={this.goToEncounter} items={this.props.encounters} />
         <Button onPress={() => goBack() } content="Back"/>
       </View>
@@ -33,8 +33,10 @@ class LocationsShow extends Component {
 
 function mapStateToProps(state) {
   const {currentLocation} = state.locations;
+  const {user} = state.auth;
   return {
-    ...currentLocation
+    ...currentLocation,
+    user
   }
 }
 

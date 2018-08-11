@@ -35,8 +35,9 @@ class Options extends Component {
   }
 
   render(){
-    const {authenticated} = this.props
-    if(!this.props.user.authenticated){
+    const {authenticated, email} = this.props.user;
+
+    if(!authenticated && email != "guest_user"){
       return <View></View>
     }
 
@@ -52,7 +53,6 @@ class Options extends Component {
 
 function mapStateToProps(state){
   const {user, authenticated} = state.auth;
-  console.log("Options Auth:",state.auth);
   return{
     user: user
   }

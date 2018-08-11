@@ -13,7 +13,9 @@ import CollectionCard from "../widgets/collectionCard";
 class UserProfile extends Component {
 
   componentDidMount(){
-    this.props.getUserEncounters(this.props.user.id, () => console.log("Got User!"), (e) => console.log(e));
+    if(this.props.user.email != "guest_user"){
+      this.props.getUserEncounters(this.props.user.id, () => console.log("Got User!"), (e) => console.log(e));
+    }
   }
 
   logOut = () => {
@@ -25,6 +27,7 @@ class UserProfile extends Component {
     AsyncStorage.removeItem(USER);
   }
 
+
   goToEncounter = (id) => {
     this.props.getEncounter(id, () => history.push("/encounters/"+id),() => console.log(e));
   }
@@ -32,11 +35,20 @@ class UserProfile extends Component {
   render(){
     return(
       <View>
-        <Text style={[baseStyles.h1]}>Profile</Text>
-        <Text>{this.props.user.email}</Text>
-        <Button content="Logout" onPress={ this.logOut }/>
-        <Button content="Back" onPress={ goBack }/>
-        <CollectionCard title="Encounters" itemTitle="date" description="description" select={this.goToEncounter} items={this.props.encounters} />
+        { this.props.user.email != "guest_user" ?
+          <View>
+            <Text style={[baseStyles.h1]}>Profile</Text>
+            <Text>{this.props.user.email}</Text>
+            <Button content="Logout" onPress={ this.logOut }/>
+            <Button content="Back" onPress={ goBack }/>
+            <CollectionCard title="Encounters" itemTitle="date" description="description" select={this.goToEncounter} items={this.props.encounters} />
+          </View>
+          :
+          <View>
+            <Button content="Login" onPress={ () => this.props.logOut(this.clearData) }/>
+            <Button content="Sign Up" onPress={ () => this.props.logOut(() => history.push("/signup")) }/>
+          </View>
+        }
       </View>
     );
   }
