@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-import {DatePickerIOS, View, Text, Platform} from "react-native";
+import {DatePickerIOS, DatePickerAndroid, View, Text, Platform} from "react-native";
 import {Icon} from "react-native-elements";
-
-import {Button} from "./button";
+import Button from "./button";
 
 
 class DatePickerCrossPlatform extends Component {
@@ -21,7 +20,7 @@ class DatePickerCrossPlatform extends Component {
         }
       });
     } catch ({code, message}) {
-      console.warn('Cannot open date picker', message);
+      console.warn('Cannot open date picker', code, message);
     }
   }
 
@@ -33,7 +32,7 @@ class DatePickerCrossPlatform extends Component {
       );
     }else{
       return(
-        <Button content={Icon("today")} onPress={() => this.handleAndroid()}/>
+        <Button content={`Pick Date - ${date.toString()}`} onPress={() => this.handleAndroid()}/>
       );
     }
   }

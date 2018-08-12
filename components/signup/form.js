@@ -84,19 +84,19 @@ class SignupForm extends Component {
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Display Name</Text>
-          <TextInput style={[styles.formInput]} placeholder="Display Name" autoCapitalize="none" onChangeText={(t) => this.handleInputChange(t, "display")}/>
+          <TextInput style={[styles.formInput]} placeholder="Display Name" autoCapitalize="none" onChangeText={(t) => this.handleInputChange(t, "display")} underlineColorAndroid="transparent"/>
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Email</Text>
-          <TextInput style={[styles.formInput]} placeholder="Email" autoCapitalize="none" onChangeText={(t) => this.handleInputChange(t, "email")}/>
+          <TextInput style={[styles.formInput]} placeholder="Email" autoCapitalize="none" onChangeText={(t) => this.handleInputChange(t, "email")} underlineColorAndroid="transparent"/>
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Password</Text>
-          <TextInput style={[styles.formInput]} placeholder="Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "password")}/>
+          <TextInput style={[styles.formInput]} placeholder="Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "password")} underlineColorAndroid="transparent"/>
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Confirm Password</Text>
-          <TextInput style={[styles.formInput]} placeholder="Confirm Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "passwordConfirmation")}/>
+          <TextInput style={[styles.formInput]} placeholder="Confirm Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "passwordConfirmation")} underlineColorAndroid="transparent"/>
         </View>
         <Error error={this.state.error}/>
         <Button onPress={ this.handleSubmit } content="Create Account"/>

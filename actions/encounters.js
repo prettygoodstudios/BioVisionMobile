@@ -1,4 +1,5 @@
 import axios from "axios";
+import {SQLite} from "expo";
 
 import {CREATE_ENCOUNTER, GET_ENCOUNTER, UPDATE_ENCOUNTER, GET_ENCOUNTER_BY_DATE, GET_USER_ENCOUNTERS, GET_MONTH_ENCOUNTERS, CREATE_USER} from "./types";
 import {ROOT_URL} from "../webService";
@@ -93,4 +94,29 @@ export function getMonthEncounters({start, end}, success, error){
       error(e);
     });
   }
+}
+
+export function updateLocalEncounters(encounters, success, error){
+  const db = SQLite.openDatabase("biovisiondatabase");
+  const createEncounterTable = 'CREATE TABLE IF NOT EXISTS encounters (id integer primary key not null unique, specie_id integer foreign key not null, location_id integer foriegn key not null, description text);';
+  db.transaction((tx) => {
+    tx.executeSql(createEncounterTable, () => {
+      encounters.forEach((e) => {
+        const {id, specie_id, location_id, description} = e;
+        tx.executeSql(`INSERT INTO encounters (id, specie_id, location_id, description) VALUES(?, ?, ?, ?);`, [id, specie_id, location_id, description]);
+      });
+    });
+  });
+}
+
+export function getLocalEncounters(success){
+  const db = SQLite.openDatabase("biovisiondatabase");
+  const createEncounterTable = 'CREATE TABLE IF NOT EXISTS encounters (id integer primary key not null unique, specie_id integer foreign key not null, location_id integer foriegn key not null, description text);';
+  db.transaction((tx) => {
+    tx.executeSql(createEncounterTable, () => {
+      tx.executeSql('SELECT * FROM encounters;', (t, r) => {
+        success(r.rows._array);
+      });
+    });
+  });
 }

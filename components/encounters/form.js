@@ -99,32 +99,32 @@ class EncounterForm extends Component {
         <Text style={[baseStyles.h1]}>Location</Text>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Title</Text>
-          <TextInput style={[styles.formInput]} placeholder="Title" autoCapitalize="none" onChangeText={(t) => this.setState({title: t})} defaultValue={this.props.title} value={this.state.title}/>
+          <TextInput style={[styles.formInput]} placeholder="Title" autoCapitalize="none" onChangeText={(t) => this.setState({title: t})} defaultValue={this.props.title} value={this.state.title} underlineColorAndroid="transparent"/>
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Address</Text>
-          <TextInput style={[styles.formInput]} placeholder="Address" autoCapitalize="none" onChangeText={(t) => this.setState({address: t})} defaultValue={addressArray[0]} value={this.state.address}/>
+          <TextInput style={[styles.formInput]} placeholder="Address" autoCapitalize="none" onChangeText={(t) => this.setState({address: t})} defaultValue={addressArray[0]} value={this.state.address} underlineColorAndroid="transparent"/>
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>City</Text>
-          <TextInput style={[styles.formInput]} placeholder="City" autoCapitalize="none" onChangeText={(t) => this.setState({city: t})} defaultValue={addressArray[1]} value={this.state.city}/>
+          <TextInput style={[styles.formInput]} placeholder="City" autoCapitalize="none" onChangeText={(t) => this.setState({city: t})} defaultValue={addressArray[1]} value={this.state.city} underlineColorAndroid="transparent"/>
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>State</Text>
-          <TextInput style={[styles.formInput]} placeholder="State" autoCapitalize="none" onChangeText={(t) => this.setState({state: t})} defaultValue={addressArray[2]} value={this.state.state}/>
+          <TextInput style={[styles.formInput]} placeholder="State" autoCapitalize="none" onChangeText={(t) => this.setState({state: t})} defaultValue={addressArray[2]} value={this.state.state} underlineColorAndroid="transparent"/>
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Country</Text>
-          <TextInput style={[styles.formInput]} placeholder="Country" autoCapitalize="none" onChangeText={(t) => this.setState({country: t})} defaultValue={addressArray[3]} value={this.state.country}/>
+          <TextInput style={[styles.formInput]} placeholder="Country" autoCapitalize="none" onChangeText={(t) => this.setState({country: t})} defaultValue={addressArray[3]} value={this.state.country} underlineColorAndroid="transparent"/>
         </View>
         <Text style={[baseStyles.h1]}>Encounter</Text>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Description</Text>
-          <TextInput style={[styles.formInput]} placeholder="Description" autoCapitalize="none" onChangeText={(t) => this.setState({description: t})} value={this.state.description}/>
+          <TextInput style={[styles.formInput]} placeholder="Description" autoCapitalize="none" onChangeText={(t) => this.setState({description: t})} value={this.state.description} underlineColorAndroid="transparent"/>
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Date</Text>
-          <TextInput style={[styles.formInput]} placeholder="Date" autoCapitalize="none" onChangeText={(t) => this.setState({date: t})} value={this.state.date}/>
+          <TextInput style={[styles.formInput]} placeholder="Date" autoCapitalize="none" onChangeText={(t) => this.setState({date: t})} value={this.state.date} underlineColorAndroid="transparent"/>
         </View>
         <Text style={[baseStyles.h1]}>Specie</Text>
         { !this.state.newSpecie &&
@@ -150,11 +150,11 @@ class EncounterForm extends Component {
           <View>
             <View style={[styles.formGroup]}>
               <Text style={[styles.formLabel]}>Common Name</Text>
-              <TextInput style={[styles.formInput]} placeholder="Common Name" autoCapitalize="none" onChangeText={(t) => this.setState({common: t})} value={this.state.common}/>
+              <TextInput style={[styles.formInput]} placeholder="Common Name" autoCapitalize="none" onChangeText={(t) => this.setState({common: t})} value={this.state.common} underlineColorAndroid="transparent"/>
             </View>
             <View style={[styles.formGroup]}>
               <Text style={[styles.formLabel]}>Scientific Name</Text>
-              <TextInput style={[styles.formInput]} placeholder="Scientific Name" autoCapitalize="none" onChangeText={(t) => this.setState({scientific: t})} value={this.state.scientific}/>
+              <TextInput style={[styles.formInput]} placeholder="Scientific Name" autoCapitalize="none" onChangeText={(t) => this.setState({scientific: t})} value={this.state.scientific} underlineColorAndroid="transparent"/>
             </View>
           </View>
         }

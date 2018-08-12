@@ -28,9 +28,8 @@ const styles = StyleSheet.create({
   },
   menuImage: {
     fontSize: 50,
-    position: "absolute",
-    top: 0,
-    color: DARK_COLOR
+    color: DARK_COLOR,
+    zIndex: 999
   }
 });
 

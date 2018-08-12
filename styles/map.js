@@ -19,10 +19,7 @@ const styles = StyleSheet.create({
   },
   markerIcon: {
     color: PRIMARY_COLOR,
-    fontSize: 50,
-    position: "absolute",
-    top: -20,
-    left: 0
+    fontSize: 50
   }
 });
 

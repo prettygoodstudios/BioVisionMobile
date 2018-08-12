@@ -103,11 +103,11 @@ class LoginForm extends Component {
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Email</Text>
-          <TextInput style={[styles.formInput]} placeholder="Email" autoCapitalize="none" onChangeText={(t) => this.handleInputChange(t, "email")}/>
+          <TextInput style={[styles.formInput]} placeholder="Email" autoCapitalize="none" onChangeText={(t) => this.handleInputChange(t, "email")} underlineColorAndroid="transparent"/>
         </View>
         <View style={[styles.formGroup]}>
           <Text style={[styles.formLabel]}>Password</Text>
-          <TextInput style={[styles.formInput]} placeholder="Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "password")}/>
+          <TextInput style={[styles.formInput]} placeholder="Password" secureTextEntry={true} onChangeText={(t) => this.handleInputChange(t, "password")} underlineColorAndroid="transparent"/>
         </View>
         <Error error={this.state.error}/>
         <Button onPress={ this.handleSubmit } content="Login"/>

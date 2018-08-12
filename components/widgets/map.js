@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View, Text} from "react-native";
+import {View, Text, Platform} from "react-native";
 import {Icon} from "react-native-elements";
 import {connect} from "react-redux";
 import {MapView} from "expo";
@@ -38,12 +38,12 @@ class Map extends Component {
       >
         { locations.map((l, i) => {
           return (
-            <Marker title={l.city} coordinate={{latitude: l.latitude, longitude: l.longitude}} key={i} style={[styles.marker]}>
+            <Marker title={l.city} coordinate={{latitude: l.latitude, longitude: l.longitude}} key={i} style={[styles.marker]} onCalloutPress={Platform.OS != "ios" ? () => this.loadLocation(l.id)  : () => console.log("Callout Click")}>
               <Icon name="place" iconStyle={styles.markerIcon}/>
-              <Callout style={styles.callout}>
+              <Callout style={styles.callout} >
                 <Text style={[baseStyles.h1]}>{safeTitle(l)}</Text>
                 <Text style={{width: 300}}>{l.full_address}</Text>
-                <Button content="View" onPress={() => this.loadLocation(l.id)}/>
+                {Platform.OS === "ios" ? <Button content="View" onPress={() => this.loadLocation(l.id)}/> : <Text style={{width: 300}}>Tap to View!</Text>}
               </Callout>
             </Marker>
           );
