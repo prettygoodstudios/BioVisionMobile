@@ -8,6 +8,7 @@ import {safeTitle} from "../../helpers/locations";
 
 import Map from "../widgets/map";
 import CollectionCard from "../widgets/collectionCard";
+import Error from "../widgets/error";
 
 class LocationsIndex extends Component {
   constructor(){
@@ -18,20 +19,21 @@ class LocationsIndex extends Component {
         longitude: -111.694649,
         latitudeDelta: 0.3922,
         longitudeDelta: 0.3921
-      }
+      },
+      error: ""
     }
   }
   componentDidMount(){
     this.props.setLoading(true);
-    this.props.locationsIndex(this.success,this.error);
+    this.props.locationsIndex(this.success, this.error);
   }
 
   success = (locations) => {
     const first = locations[0];
     this.setState({
       region: {
-        latitude: first.latitude,
-        longitude: first.longitude,
+        latitude: first ? first.latitude : this.state.latitude,
+        longitude: first ? first.longitude : this.state.longitude,
         latitudeDelta: 0.2422,
         longitudeDelta: 0.2421
       }
@@ -39,12 +41,15 @@ class LocationsIndex extends Component {
     this.props.setLoading(false);
   }
   error = (e) => {
-    console.log("Error",e);
+    this.setState({
+      error: "Could not establish a connection with the server."
+    });
+    console.log("Server Error:", e);
     this.props.setLoading(false);
   }
 
   selectLocation = (id) => {
-      this.props.getLocation(id,this.changeLocation, this.error);
+    this.props.getLocation(id,() => this.changeLocation(), () => this.error());
   }
 
   changeLocation = (id) => {
@@ -55,6 +60,7 @@ class LocationsIndex extends Component {
     return(
       <View>
         <Map region={this.state.region} locations={this.props.locations}/>
+        <Error error={this.state.error}/>
         <CollectionCard description="full_address" mapTitle={safeTitle} select={this.selectLocation} title="Locations" items={this.props.locations}/>
       </View>
     );

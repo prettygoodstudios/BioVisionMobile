@@ -162,7 +162,9 @@ class EncounterFilter extends Component {
 
   error = (e) => {
     this.props.setLoading(false);
-    console.log(e);
+    this.setState({
+      error: "Could not establish a connection to the server."
+    });
   }
 
   setMonth = (start, date) => {

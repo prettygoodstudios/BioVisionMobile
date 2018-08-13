@@ -97,16 +97,24 @@ export function getMonthEncounters({start, end}, success, error){
 }
 
 export function updateLocalEncounters(encounters, success, error){
-  const db = SQLite.openDatabase("biovisiondatabase");
-  const createEncounterTable = 'CREATE TABLE IF NOT EXISTS encounters (id integer primary key not null unique, specie_id integer foreign key not null, location_id integer foriegn key not null, description text);';
-  db.transaction((tx) => {
-    tx.executeSql(createEncounterTable, () => {
-      encounters.forEach((e) => {
-        const {id, specie_id, location_id, description} = e;
-        tx.executeSql(`INSERT INTO encounters (id, specie_id, location_id, description) VALUES(?, ?, ?, ?);`, [id, specie_id, location_id, description]);
+  return function(dispatch){
+    const db = SQLite.openDatabase("biovisiondatabase");
+    const createEncounterTable = 'CREATE TABLE IF NOT EXISTS encounters (id integer primary key not null unique, specie_id integer foreign key not null, location_id integer foriegn key not null, description text);';
+    db.transaction((tx) => {
+      tx.executeSql(createEncounterTable, () => {
+        encounters.forEach((e) => {
+          const {id, specie_id, location_id, description} = e;
+          tx.executeSql(`INSERT INTO encounters (id, specie_id, location_id, description) VALUES(?, ?, ?, ?);`, [id, specie_id, location_id, description]);
+        });
+        getLocalEncounters((rows) => {
+          dispatch({
+            type: GET_USER_ENCOUNTERS,
+            payload: rows
+          })
+        });
       });
-    });
-  });
+    }, (tx, e) => error(e));
+  }
 }
 
 export function getLocalEncounters(success){
@@ -115,6 +123,7 @@ export function getLocalEncounters(success){
   db.transaction((tx) => {
     tx.executeSql(createEncounterTable, () => {
       tx.executeSql('SELECT * FROM encounters;', (t, r) => {
+        console.log(r);
         success(r.rows._array);
       });
     });
