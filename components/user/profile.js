@@ -37,7 +37,7 @@ class UserProfile extends Component {
       <View>
         { this.props.user.email != "guest_user" ?
           <View>
-            <Text style={[baseStyles.h1]}>Profile</Text>
+            <Text style={[baseStyles.h1]}>{this.props.user.display}</Text>
             <Text>{this.props.user.email}</Text>
             <Button content="Logout" onPress={ this.logOut }/>
             <Button content="Back" onPress={ goBack }/>

@@ -1,6 +1,16 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet, Platform} from "react-native";
 
 import {PRIMARY_COLOR} from "./main";
+
+const markerAndroid = {
+
+}
+const markerIos = {
+  position: "absolute",
+  top: -20,
+  left: 0
+}
+const markerPlatform = Platform.OS === 'ios' ? markerIos : markerAndroid;
 
 const styles = StyleSheet.create({
   map: {
@@ -19,7 +29,8 @@ const styles = StyleSheet.create({
   },
   markerIcon: {
     color: PRIMARY_COLOR,
-    fontSize: 50
+    fontSize: 50,
+    ...markerIos
   }
 });
 
